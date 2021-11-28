@@ -6,6 +6,6 @@ import javax.persistence.ManyToOne;
 public class BillEntity extends BaseEntity{
 
 	@ManyToOne()
-	@JoinColumn(name = "bill_id")
+	@JoinColumn(name = "student_id")
 	private StudentEntity students_bill;
 }
