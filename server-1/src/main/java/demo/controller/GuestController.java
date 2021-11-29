@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import demo.dto.GuestDTO;
 import demo.entity.GuestEntity;
 import demo.entity.ResponseObject;
 import demo.service.GuestService;
@@ -21,7 +22,7 @@ public class GuestController {
 	private GuestService guestService;
 	
 	@PostMapping(value = "/api/guest")
-	public ResponseEntity<ResponseObject> create(@RequestBody GuestEntity model){
+	public ResponseEntity<ResponseObject> create(@RequestBody GuestDTO model){
 		return guestService.create(model);
 	}
 	

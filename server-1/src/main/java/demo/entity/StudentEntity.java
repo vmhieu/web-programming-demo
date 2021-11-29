@@ -46,9 +46,9 @@ public class StudentEntity extends BaseEntity{
 	@OneToMany(mappedBy="studentguest", cascade=CascadeType.ALL)
 	private List<GuestEntity> guest;
 	
-	public StudentEntity(String initStudentCode) {
-		////
-	}
+//	public StudentEntity(String initStudentCode) {
+//		////
+//	}
 	
 //	@OneToMany(mappedBy="students_vehicle")
 //	private List<VehicleEntity> vehicle;
