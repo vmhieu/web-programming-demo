@@ -5,7 +5,7 @@ import javax.persistence.ManyToOne;
 
 public class ServiceEntity extends BaseEntity{
 
-	@ManyToOne()
-	@JoinColumn(name = "student_id")
-	private StudentEntity student_service;
+//	@ManyToOne()
+//	@JoinColumn(name = "student_id")
+//	private StudentEntity student_service;
 }

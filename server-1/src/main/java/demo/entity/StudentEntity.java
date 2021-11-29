@@ -7,14 +7,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "student")
 public class StudentEntity extends BaseEntity{
+	
 
 	@Column(name = "name")
 	private String name;
@@ -34,21 +36,29 @@ public class StudentEntity extends BaseEntity{
 	@Column(name = "address")
 	private String address;
 	
-	@ManyToOne
-	@JoinColumn(name = "room_id")
-	private RoomEntity rooms;
+//	@ManyToOne
+//	@JoinColumn(name = "room_id")
+//	private RoomEntity rooms;
 	
-	@OneToMany(mappedBy="students_bill",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<BillEntity> bill;
+//	@OneToMany(mappedBy="students_bill")
+//	private List<BillEntity> bill;
 	
-	@OneToMany(mappedBy="students_guest",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="studentguest", cascade=CascadeType.ALL)
 	private List<GuestEntity> guest;
 	
-	@OneToMany(mappedBy="students_vehicle",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<VehicleEntity> vehicle;
+	public StudentEntity(String initStudentCode) {
+		////
+	}
 	
-	@OneToMany(mappedBy="students_service",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ServiceEntity> service;
+//	@OneToMany(mappedBy="students_vehicle")
+//	private List<VehicleEntity> vehicle;
+//	
+//	@OneToMany(mappedBy="students_service")
+//	private List<ServiceEntity> service;
+
+//	public StudentEntity() {
+//		super();
+//	}
 
 	public String getName() {
 		return name;
@@ -98,22 +108,6 @@ public class StudentEntity extends BaseEntity{
 		this.address = address;
 	}
 
-	public RoomEntity getRooms() {
-		return rooms;
-	}
-
-	public void setRooms(RoomEntity rooms) {
-		this.rooms = rooms;
-	}
-
-	public List<BillEntity> getBill() {
-		return bill;
-	}
-
-	public void setBill(List<BillEntity> bill) {
-		this.bill = bill;
-	}
-
 	public List<GuestEntity> getGuest() {
 		return guest;
 	}
@@ -122,21 +116,39 @@ public class StudentEntity extends BaseEntity{
 		this.guest = guest;
 	}
 
-	public List<VehicleEntity> getVehicle() {
-		return vehicle;
-	}
+//	public RoomEntity getRooms() {
+//		return rooms;
+//	}
+//
+//	public void setRooms(RoomEntity rooms) {
+//		this.rooms = rooms;
+//	}
 
-	public void setVehicle(List<VehicleEntity> vehicle) {
-		this.vehicle = vehicle;
-	}
+//	public List<BillEntity> getBill() {
+//		return bill;
+//	}
+//
+//	public void setBill(List<BillEntity> bill) {
+//		this.bill = bill;
+//	}
 
-	public List<ServiceEntity> getService() {
-		return service;
-	}
+	
 
-	public void setService(List<ServiceEntity> service) {
-		this.service = service;
-	}
+//	public List<VehicleEntity> getVehicle() {
+//		return vehicle;
+//	}
+//
+//	public void setVehicle(List<VehicleEntity> vehicle) {
+//		this.vehicle = vehicle;
+//	}
+//
+//	public List<ServiceEntity> getService() {
+//		return service;
+//	}
+//
+//	public void setService(List<ServiceEntity> service) {
+//		this.service = service;
+//	}
 	
 	
 }
