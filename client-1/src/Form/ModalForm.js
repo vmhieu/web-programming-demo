@@ -1,43 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
 import RenderForm from './RenderForm';
+import { addStudent, delStudent } from '../service/account';
 const ModalForm = ({ visible, onCancel = () => { },
 }) => {
-
-    const [dataForm] = Form.useForm();
+    console.log('visible' ,visible)
+    const [form] = Form.useForm();
     const [dataInit, setDataInit] = useState({});
 
-    const [addAccountForm, setAddAccountForm] = useState(addAccountFormInit);
+    useEffect(() => form.resetFields(), [dataInit]);
 
-    const onFinish = (values) => {
+    const [addAccountForm, setAddAccountForm] = useState(addAccountFormInit);
+    useEffect(() => {
+        if(visible.type == "add"){
+            setDataInit({})
+        }
+        if(visible.type == "edit"){
+            setDataInit(visible.data)
+        }
+    } , [visible])
+
+
+    const onFinish = async(values) => {
+        onCancel()
         console.log('Success:', values);
+        if(visible.type == "add") {
+            try {
+                const res = await addStudent()
+                console.log("res" ,res)
+            } catch (error) {
+                console.log("err" ,error)
+            }
+        }
     };
     return (
         <div>
             <Modal
-                title="Chỉnh sửa"
+                title={visible.type == "edit" ? "Chỉnh sửa" : "Thêm mới"}
                 visible={visible}
                 onCancel={() => {
+                    console.log("123")
                     onCancel();
                 }}
                 footer={null}
             >
                 <Form
-                    form={dataForm}
+                    form={form}
                     name="control-hooks"
                     onFinish={onFinish}
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 17 }}
-                    initialValues={dataInit}
+                    initialValues={dataInit} 
                 >
                     <RenderForm
                         jsonFrom={addAccountForm}
-                        disabled={[]}
-
+                        visible={visible}
                     />
                     <Form.Item style={{ marginTop: 20, paddingTop: 10, borderTop: '1px solid #ddd', marginRight: 15 }} wrapperCol={{ span: 24 }} >
                         <Button type="primary" htmlType="submit" style={{ float: 'right' }} loading={false}>
-                            Chỉnh sửa
+                            {visible.type == "edit" ? "Chỉnh sửa" : "Thêm mới"}
                         </Button>
                     </Form.Item>
                 </Form>
@@ -48,50 +69,32 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 const addAccountFormInit = [
     {
-        name: 'username',
-        label: 'Tên đăng nhập',
-        rules: [{ required: true, message: 'Tên đăng nhập cần có ít nhất 3 ký tự', min: 3 }],
+        name: 'name',
+        label: 'Name',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
         // type: 'number'
     },
     {
-        name: 'name',
-        label: 'Tên',
+        name: 'studentCode',
+        label: 'StudentCode',
         rules: [{ required: true, message: 'Bạn cần nhập tên tài khoản' }],
     },
     {
-        name: 'password',
-        label: 'Mật khẩu',
-        type: 'password',
-        rules: [{
-            required: true,
-            message: 'Mật khẩu cần có ít nhất 6 ký tự',
-            min: 6
-        },],
+        name: 'birthDate',
+        label: 'BirthDate',
+        rules: [{required : true ,message : "Không được bỏ trống"}],
     },
     {
-        name: 'email',
-        label: 'Email',
-        rules: [{ required: true, type: 'email', message: 'Địa chỉ email không đúng định dạng' }],
+        name: 'grade',
+        label: 'Grade',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
-        name: 'phone',
-        label: 'Số điện thoại',
-        type: 'phone',
-        rules: [{ required: true, message: 'Bạn cần điền số điện thoại' }],
+        name: 'address',
+        label: 'Address',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
-    {
-        name: 'level',
-        label: 'Role',
-        type: 'select',
-        rules: [{ required: true, message: 'Bạn cần chọn role' }],
-        data: []
-    },
-    {
-        name: 'line_id',
-        label: 'Line',
-        type: 'select',
-        rules: [{ required: true, message: 'Bạn cần chọn Line' }],
-        data: []
-    },
+    
 ];
+
 export default ModalForm;

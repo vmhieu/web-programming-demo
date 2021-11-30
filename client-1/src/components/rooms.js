@@ -33,13 +33,13 @@ const columns = [
         dataIndex: 'tags',
         render: tags => (
             <>
-                {tags.map(tag => {
+                {tags.map((tag ,key) => {
                     let color = tag.length > 5 ? 'geekblue' : 'green';
                     if (tag === 'loser') {
                         color = 'volcano';
                     }
                     return (
-                        <Tag color={color} key={tag}>
+                        <Tag key={key} color={color} key={tag}>
                             {tag.toUpperCase()}
                         </Tag>
                     );

@@ -1,33 +1,68 @@
-import React, { useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Table, Tag, Space, Tabs, Modal, Button, Alert } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import ModalForm from '../Form/ModalForm';
+import { studentAPI } from '../fake-api/student-API';;
 
 const Student = (props) => {
 
     const [row, setRow] = React.useState(false);
+    const [data, setData] = useState([])
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
+    const _requestData = async () => {
+        const data = await studentAPI()
+        console.log("data", data)
+        setData(data)
+    }
+
+
+    useEffect(() => {
+        _requestData()
+    })
+
 
     const _handleRow = (val) => {
         setRow(val);
     }
-    const handleCancel = () => {
-        setRow(false);
-    };
-
-    const handleSelect = (data, type) => {
-        setRow(false);
-        setModalForm({
-            data,
-            type
-        })
+    const handleSelect =  (data, type) => {
+        if (type == "edit") {
+            console.log("duc123")
+            setRow(false);
+            setModalForm({
+                data,
+                type
+            })
+        }
+        if(type == "add"){
+            setRow(false)
+            setModalForm({
+                data,
+                type
+            })
+        }
+        if (type == "del") {
+            setRow(false)
+            const r = window.confirm("Bạn có muốn xóa item này không")
+            if(r == true) {
+                // const res = 
+            }
+        }
     }
     return (
         <div>
+            <div>
+                <Button onClick={() => {
+                    handleSelect("" , "add")
+                }} style={{ margin: "0  0  15px 30px", borderRadius: "15px" }} icon={<PlusOutlined />}>Thêm mới</Button>
+                <Button onClick={() => {
+                    setData(false)
+                    _requestData()
+                }} style={{ margin: "0  0  15px 5px", borderRadius: "15px" }} icon={<ReloadOutlined />}>Làm mới</Button>
+            </div>
             <Table
                 columns={columns}
-                dataSource={aa}
+                dataSource={data}
                 onRow={(r) => ({
                     onClick: () => {
                         _handleRow(r)
@@ -38,26 +73,25 @@ const Student = (props) => {
                 <Modal
                     title="Chỉnh sửa"
                     visible={row}
-                    onCancel={handleCancel}
                     footer={null}
                     // style={{width: 250}}
                     minWidth={400}
                     onCancel={() => {
+                        setRow(false)
                         setOption("");
                     }}
                     bodyStyle={{ borderRadius: '15px' }}
                 >
                     <div style={{ display: "flex", justifyContent: "space-around" }}>
                         <Button
-                            style={{ alignItems: "center", width: '120px', height: '80px', borderRadius: '10px' }}
+                            style={{ alignItems: "center", width: '120px', height: '60px', borderRadius: '10px', backgroundColor: "DodgerBlue" }}
                             onClick={() => handleSelect(row, "edit")}
-                            type="primary"
                         >
                             <EditOutlined />
                             Chỉnh sửa
                         </Button>
                         <Button
-                            style={{ display: "flex", alignItems: "center", width: '120px', height: '80px', borderRadius: '10px' }}
+                            style={{ display: "flex", alignItems: "center", width: '120px', height: '60px', borderRadius: '10px', backgroundColor: "#616161" }}
                             onClick={() => handleSelect(row, "del")}
                             type="danger"
                         >
@@ -84,103 +118,29 @@ const columns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: text => <a>{text}</a>,
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: 'StudentCode',
+        dataIndex: 'studentCode',
+        key: 'studentCode',
+    },
+    {
+        title: 'BirthDate',
+        dataIndex: 'birthDate',
+        key: 'birthDate'
+    },
+    {
+        title: 'Grade',
+        dataIndex: 'grade',
+        key: 'grade'
     },
     {
         title: 'Address',
         dataIndex: 'address',
         key: 'address',
     },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
-            <>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
-];
-const bb = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    }
-]
-const aa = new Array(20).fill(1).map((i, index) => {
 
-    return (index % 2 == 0) ? {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    } : {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    }
-})
-console.log(aa)
-// const data = [
-//     {
-//         key: '1',
-//         name: 'John Brown',
-//         age: 32,
-//         address: 'New York No. 1 Lake Park',
-//         tags: ['nice', 'developer'],
-//     },
-//     {
-//         key: '2',
-//         name: 'Jim Green',
-//         age: 42,
-//         address: 'London No. 1 Lake Park',
-//         tags: ['loser'],
-//     },
-//     {
-//         key: '3',
-//         name: 'Joe Black',
-//         age: 32,
-//         address: 'Sidney No. 1 Lake Park',
-//         tags: ['cool', 'teacher'],
-//     },
-// ];
+];
+
+
 export default Student;
