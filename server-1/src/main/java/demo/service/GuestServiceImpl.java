@@ -3,11 +3,13 @@ package demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import demo.dto.GuestDTO;
 import demo.entity.GuestEntity;
 import demo.entity.ResponseObject;
 import demo.entity.StudentEntity;
@@ -23,20 +25,17 @@ public class GuestServiceImpl implements GuestService{
 	@Autowired
 	private StudentRepository studentRepository;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@Override
-	public ResponseEntity<ResponseObject> create(GuestEntity guest) {
-//		StudentEntity studentEntity = new StudentEntity();
-//		StudentEntity foundStudent = studentRepository.findByStudentCode(guest.getStudentguest().getStudentCode());
-//		guest.setStudentguest(foundStudent);
-//		StudentEntity foundStudent = studentRepository.findById(guest.getId());
-////		System.out.println(foundStudent);
-////	studentEntity.setStudentCode(foundStudent);
-//
-//		if(guest != null) {
-//			guest.setStudentguest(foundStudent);
-//			GuestEntity guestCreate = new GuestEntity();
-//			guestCreate.setStudentguest(foundStudent);
-			guest = guestRepository.save(guest);
+	public ResponseEntity<ResponseObject> create(GuestDTO guest) {
+		
+		GuestEntity guestEntity = new GuestEntity();
+		StudentEntity studentEntity = studentRepository.findById(guest.getStudentID());
+			guestEntity.setStudentguest(studentEntity);
+			guestEntity = guestRepository.save(guestEntity);			
+			guest = modelMapper.map(studentEntity, GuestDTO.class);
 			return ResponseEntity.status(HttpStatus.OK).body(
 					new ResponseObject("ok", "create successfully", guest));
 //		} else {
@@ -83,5 +82,7 @@ public class GuestServiceImpl implements GuestService{
 		// TODO Auto-generated method stub
 		
 	}
+	
+
 
 }

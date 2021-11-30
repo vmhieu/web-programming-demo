@@ -25,15 +25,15 @@ public class GuestEntity extends BaseEntity{
 	@Column(name = "birth_date")
 	private Date birthDate;
 	
-	@Column
-	@CreationTimestamp
-	private Date date;
+	
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentguest;
 	
-	
+	@Column
+	@CreationTimestamp
+	private Date date;
 
 	public String getName() {
 		return name;
