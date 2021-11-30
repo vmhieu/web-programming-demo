@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
 import RenderForm from './RenderForm';
-import { addStudent, delStudent } from '../service/account';
+import {addStudent} from '../../../service/account'
 const ModalForm = ({ visible, onCancel = () => { },
 }) => {
     console.log('visible' ,visible)

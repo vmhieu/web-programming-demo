@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Alert } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined } from '@ant-design/icons';
-import ModalForm from '../Form/ModalForm';
+import { Table, Tag, Space, Tabs, Modal, Button, Alert ,notification  } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined ,CheckOutlined ,TwitterOutlined} from '@ant-design/icons';
+import ModalForm from './Form/FormStudent/ModalForm';
 import { studentAPI } from '../fake-api/student-API';;
 
 const Student = (props) => {
@@ -21,7 +21,14 @@ const Student = (props) => {
         _requestData()
     })
 
-
+    const openNotification = () => {
+        notification.open({
+          message: 'Xóa thành công',
+          description:
+          <TwitterOutlined style={{color : '#93b874'}}/> ,
+          icon: <CheckOutlined style={{ color: '#108ee9' }} />,
+        });
+      };
     const _handleRow = (val) => {
         setRow(val);
     }
@@ -45,7 +52,7 @@ const Student = (props) => {
             setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
-                // const res = 
+                openNotification()
             }
         }
     }

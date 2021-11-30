@@ -36,10 +36,10 @@ function App() {
           <Student />
         </TabPane>
         <TabPane tab="Quản lý phòng" key="2">
-          <Visiter />
+          <Rooms />
         </TabPane>
         <TabPane tab="Quản lý khách" key="3">
-          <Rooms />
+          <Visiter />
         </TabPane>
         <TabPane tab="Quản lý dịch vụ" key="4">
           <Service />
