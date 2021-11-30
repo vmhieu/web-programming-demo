@@ -32,10 +32,7 @@ function App() {
     <div className="App">
       <Tabs defaultActiveKey="1" centered>
         <TabPane tab="Quản lý sinh viên" key="1">
-          <div>
-            <Button style={{ margin: "0  0  15px 30px", borderRadius: "15px" }} icon={<PlusOutlined />}>Thêm mới</Button>
-            <Button style={{ margin: "0  0  15px 5px", borderRadius: "15px" }} icon={<ReloadOutlined />}>Làm mới</Button>
-          </div>
+
           <Student />
         </TabPane>
         <TabPane tab="Quản lý khách" key="2">
