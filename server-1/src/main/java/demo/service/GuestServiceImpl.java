@@ -1,5 +1,6 @@
 package demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,72 +18,82 @@ import demo.repository.GuestRepository;
 import demo.repository.StudentRepository;
 
 @Service
-public class GuestServiceImpl implements GuestService{
+public class GuestServiceImpl implements GuestService {
 
 	@Autowired
 	private GuestRepository guestRepository;
-	
+
 	@Autowired
 	private StudentRepository studentRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
 	public ResponseEntity<ResponseObject> create(GuestDTO guest) {
-		
+
 		GuestEntity guestEntity = new GuestEntity();
+		guestEntity = modelMapper.map(guest, GuestEntity.class);
 		StudentEntity studentEntity = studentRepository.findById(guest.getStudentID());
-			guestEntity.setStudentguest(studentEntity);
-			guestEntity = guestRepository.save(guestEntity);			
-			guest = modelMapper.map(studentEntity, GuestDTO.class);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseObject("ok", "create successfully", guest));
-//		} else {
-//			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-//					new ResponseObject("failed", "can not find StudentCode", ""));
-//		}
-			
+		guestEntity.setStudentID(studentEntity);
+		guestEntity = guestRepository.save(guestEntity);
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "create successfully", ""));
+
+
 	}
 
 	@Override
-	public ResponseEntity<ResponseObject> update(GuestEntity guest) {
+	public ResponseEntity<ResponseObject> update(GuestDTO guest) {
+
 		Optional<GuestEntity> guestDb = this.guestRepository.findById(guest.getId());
-		if(guestDb.isPresent()) {
+		if (guestDb.isPresent()) {
 			GuestEntity guestUpdate = guestDb.get();
-			guestUpdate.setId(guest.getId());
-			guestUpdate.setName(guest.getName());
-			guestUpdate.setBirthDate(guest.getBirthDate());
-			guestUpdate.setIdentificationNo(guest.getIdentificationNo());
-			guestUpdate.setDate(guest.getDate());
-			guestUpdate.setStudentguest(guest.getStudentguest());
+			guestUpdate = modelMapper.map(guest, GuestEntity.class);
+		
 			guestRepository.save(guestUpdate);
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseObject("ok", "Insert Guest successfully", guestUpdate));
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseObject("ok", "Insert Guest successfully", guest));
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-					new ResponseObject("failed", "Insert Guest successfully", ""));
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ResponseObject("failed", "Insert Guest successfully", ""));
 		}
 	}
 
 	@Override
-	public List<GuestEntity> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<GuestDTO> getAll() {
+		List<GuestDTO> results = new ArrayList<>();
+		List<GuestEntity> entities = guestRepository.findAll();
+		for (GuestEntity item : entities) {
+			GuestDTO guestDTO = modelMapper.map(item, GuestDTO.class);
+			results.add(guestDTO);
+		}
+		return results;
+
 	}
 
 	@Override
-	public GuestEntity getById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ResponseObject> getById(long id) {
+		GuestEntity guestEntity = guestRepository.findById(id).get();
+		if (guestEntity.getId() != 0) {
+
+			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseObject("ok", "Get successfully", guestDTO));
+		} else {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseObject("failed", " successfully", ""));
+		}
 	}
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
+		GuestEntity guestEntity = guestRepository.findById(id).get();
+		if (guestEntity.getId() != 0) {
+			guestRepository.deleteById(id);
+			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
+			
+
 	}
-	
 
-
+}
 }

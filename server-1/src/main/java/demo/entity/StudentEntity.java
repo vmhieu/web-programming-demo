@@ -43,7 +43,7 @@ public class StudentEntity extends BaseEntity{
 //	@OneToMany(mappedBy="students_bill")
 //	private List<BillEntity> bill;
 	
-	@OneToMany(mappedBy="studentguest", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL)
 	private List<GuestEntity> guest;
 	
 //	public StudentEntity(String initStudentCode) {

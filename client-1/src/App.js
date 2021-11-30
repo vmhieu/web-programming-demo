@@ -38,10 +38,10 @@ function App() {
           </div>
           <Student />
         </TabPane>
-        <TabPane tab="Quản lý phòng" key="2">
+        <TabPane tab="Quản lý khách" key="2">
           <Visiter />
         </TabPane>
-        <TabPane tab="Quản lý khách" key="3">
+        <TabPane tab="Quản lý phòng" key="3">
           <Rooms />
         </TabPane>
         <TabPane tab="Quản lý dịch vụ" key="4">

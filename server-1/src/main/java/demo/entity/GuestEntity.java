@@ -1,6 +1,6 @@
 package demo.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
+
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
@@ -24,17 +24,15 @@ public class GuestEntity extends BaseEntity{
 	
 	@Column(name = "birth_date")
 	private Date birthDate;
-	
-	
+		
+	@Column
+	@CreatedDate
+	private Date createdDate;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "student_id")
-	private StudentEntity studentguest;
+	private StudentEntity studentID;
 	
-	@Column
-	@CreationTimestamp
-	private Date date;
-
 	public String getName() {
 		return name;
 	}
@@ -59,23 +57,21 @@ public class GuestEntity extends BaseEntity{
 		this.birthDate = birthDate;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public StudentEntity getStudentguest() {
-		return studentguest;
+	public StudentEntity getStudentID() {
+		return studentID;
 	}
 
-	public void setStudentguest(StudentEntity studentguest) {
-		this.studentguest = studentguest;
+	public void setStudentID(StudentEntity studentID) {
+		this.studentID = studentID;
 	}
 
-	
-	
 	
 }
