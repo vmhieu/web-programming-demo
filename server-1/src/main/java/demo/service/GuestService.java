@@ -13,5 +13,6 @@ public interface GuestService {
 	ResponseEntity<ResponseObject> update(GuestDTO guest);
 	List<GuestDTO> getAll();
 	ResponseEntity<ResponseObject> getById(long id);
+//	ResponseEntity<GuestDTO> getName(); 
 	void delete(long id);
 }

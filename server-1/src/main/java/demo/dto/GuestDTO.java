@@ -9,6 +9,7 @@ public class GuestDTO extends AbstractDTO {
 	private Date birthDate;
 	private Date createdDate;
 	private long studentID;
+	private Object studentObject;
 
 	public String getName() {
 		return name;
@@ -49,5 +50,15 @@ public class GuestDTO extends AbstractDTO {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	public Object getStudentObject() {
+		return studentObject;
+	}
+
+	public void setStudentObject(Object studentObject) {
+		this.studentObject = studentObject;
+	}
+	
+	
 
 }
