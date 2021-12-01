@@ -32,7 +32,6 @@ function App() {
     <div className="App">
       <Tabs defaultActiveKey="1" centered>
         <TabPane tab="Quản lý sinh viên" key="1">
-
           <Student />
         </TabPane>
         <TabPane tab="Quản lý phòng" key="2">

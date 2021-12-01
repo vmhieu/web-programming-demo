@@ -6,7 +6,7 @@ import { studentAPI } from '../fake-api/student-API';;
 
 const Student = (props) => {
 
-    const [row, setRow] = React.useState(false);
+    const [row, setRow] = useState(false);
     const [data, setData] = useState([])
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
@@ -30,6 +30,7 @@ const Student = (props) => {
         });
       };
     const _handleRow = (val) => {
+        console.log("row" ,val)
         setRow(val);
     }
     const handleSelect =  (data, type) => {
