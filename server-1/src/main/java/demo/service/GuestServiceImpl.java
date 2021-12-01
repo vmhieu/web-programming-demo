@@ -49,7 +49,7 @@ public class GuestServiceImpl implements GuestService {
 		if (guestDb.isPresent()) {
 			GuestEntity guestUpdate = guestDb.get();
 			guestUpdate = modelMapper.map(guest, GuestEntity.class);
-		
+
 			guestRepository.save(guestUpdate);
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("ok", "Insert Guest successfully", guest));
@@ -91,9 +91,9 @@ public class GuestServiceImpl implements GuestService {
 		if (guestEntity.getId() != 0) {
 			guestRepository.deleteById(id);
 			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
-			
+
+
+		}
 
 	}
-
-}
 }
