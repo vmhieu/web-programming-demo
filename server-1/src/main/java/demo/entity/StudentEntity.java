@@ -3,15 +3,7 @@ package demo.entity;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "student")
@@ -50,11 +42,11 @@ public class StudentEntity extends BaseEntity{
 //		////
 //	}
 	
-//	@OneToMany(mappedBy="students_vehicle")
-//	private List<VehicleEntity> vehicle;
-//	
-//	@OneToMany(mappedBy="students_service")
-//	private List<ServiceEntity> service;
+	@OneToOne(mappedBy = "studentEntity")
+	private VehicleEntity vehicleEntity;
+
+	@OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL)
+	private List<ServiceEntity> serviceEntities;
 
 //	public StudentEntity() {
 //		super();
@@ -134,11 +126,11 @@ public class StudentEntity extends BaseEntity{
 
 	
 
-//	public List<VehicleEntity> getVehicle() {
+//	public List<VehicleEntity> getVehicleEntity() {
 //		return vehicle;
 //	}
 //
-//	public void setVehicle(List<VehicleEntity> vehicle) {
+//	public void setVehicleEntity(List<VehicleEntity> vehicle) {
 //		this.vehicle = vehicle;
 //	}
 //
@@ -149,6 +141,21 @@ public class StudentEntity extends BaseEntity{
 //	public void setService(List<ServiceEntity> service) {
 //		this.service = service;
 //	}
-	
-	
+
+
+	public VehicleEntity getVehicleEntity() {
+		return vehicleEntity;
+	}
+
+	public void setVehicleEntity(VehicleEntity vehicleEntity) {
+		this.vehicleEntity = vehicleEntity;
+	}
+
+	public List<ServiceEntity> getServiceEntities() {
+		return serviceEntities;
+	}
+
+	public void setServiceEntities(List<ServiceEntity> serviceEntities) {
+		this.serviceEntities = serviceEntities;
+	}
 }

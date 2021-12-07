@@ -33,14 +33,9 @@ public class GuestServiceImpl implements GuestService {
 
 	@Override
 	public ResponseEntity<ResponseObject> create(GuestDTO guest) {
-
 		GuestEntity guestEntity = new GuestEntity();
 		guestEntity = modelMapper.map(guest, GuestEntity.class);
-	//	StudentEntity studentEntity = studentRepository.findById(guest.getStudentID());
-	//	System.out.println(studentEntity.getId());
 		StudentEntity studentEntity = studentRepository.findById(guest.getStudentID());
-	//	System.out.println(studentRepository.findById(studentEntity.getId()));
-	//	studentRepository.findAll(studentEntity.getId()).forEach()
 		guestEntity.setStudentID(studentEntity);
 		if(studentEntity.getId() == guest.getStudentID() ) {
 			guestEntity = guestRepository.save(guestEntity);
@@ -49,9 +44,6 @@ public class GuestServiceImpl implements GuestService {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
 					.body(new ResponseObject("failed", "Insert Guest successfully", ""));
 		}
-		
-
-
 	}
 
 	@Override
