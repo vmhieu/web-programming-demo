@@ -28,9 +28,9 @@ public class StudentEntity extends BaseEntity{
 	@Column(name = "address")
 	private String address;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "room_id")
-//	private RoomEntity rooms;
+	@ManyToOne
+	@JoinColumn(name = "room_id")
+	private RoomEntity rooms;
 	
 //	@OneToMany(mappedBy="students_bill")
 //	private List<BillEntity> bill;
@@ -38,6 +38,7 @@ public class StudentEntity extends BaseEntity{
 	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL)
 	private List<GuestEntity> guest;
 	
+<<<<<<< HEAD
 //	public StudentEntity(String initStudentCode) {
 //		////
 //	}
@@ -47,10 +48,14 @@ public class StudentEntity extends BaseEntity{
 
 	@OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL)
 	private List<ServiceEntity> serviceEntities;
+=======
+//	@OneToMany(mappedBy="students_vehicle")
+//	private List<VehicleEntity> vehicle;
+//	
+//	@OneToMany(mappedBy="students_service")
+//	private List<ServiceEntity> service;
+>>>>>>> master
 
-//	public StudentEntity() {
-//		super();
-//	}
 
 	public String getName() {
 		return name;
@@ -108,13 +113,13 @@ public class StudentEntity extends BaseEntity{
 		this.guest = guest;
 	}
 
-//	public RoomEntity getRooms() {
-//		return rooms;
-//	}
-//
-//	public void setRooms(RoomEntity rooms) {
-//		this.rooms = rooms;
-//	}
+	public RoomEntity getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(RoomEntity rooms) {
+		this.rooms = rooms;
+	}
 
 //	public List<BillEntity> getBill() {
 //		return bill;
