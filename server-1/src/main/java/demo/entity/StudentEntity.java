@@ -38,24 +38,11 @@ public class StudentEntity extends BaseEntity{
 	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL)
 	private List<GuestEntity> guest;
 	
-<<<<<<< HEAD
-//	public StudentEntity(String initStudentCode) {
-//		////
-//	}
-	
 	@OneToOne(mappedBy = "studentEntity")
 	private VehicleEntity vehicleEntity;
 
 	@OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL)
 	private List<ServiceEntity> serviceEntities;
-=======
-//	@OneToMany(mappedBy="students_vehicle")
-//	private List<VehicleEntity> vehicle;
-//	
-//	@OneToMany(mappedBy="students_service")
-//	private List<ServiceEntity> service;
->>>>>>> master
-
 
 	public String getName() {
 		return name;
