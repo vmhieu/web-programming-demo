@@ -38,14 +38,14 @@ public class GuestServiceImpl implements GuestService {
 		guestEntity = modelMapper.map(guest, GuestEntity.class);
 		StudentEntity studentEntity = studentRepository.findById(guest.getStudentID());
 		guestEntity.setStudentID(studentEntity);
-	//	if(studentEntity.getId() == guest.getStudentID() ) {
-			guestEntity = guestRepository.save(guestEntity);
-			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "create successfully", ""));
+		//	if(studentEntity.getId() == guest.getStudentID() ) {
+		guestEntity = guestRepository.save(guestEntity);
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "create successfully", ""));
 //		} else {
 //			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
 //					.body(new ResponseObject("failed", "Insert Guest successfully", ""));
 //		}
-		
+
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class GuestServiceImpl implements GuestService {
 		Optional<GuestEntity> guestDb = this.guestRepository.findById(guest.getId());
 		if (guestDb.isPresent()) {
 			GuestEntity guestUpdate = guestDb.get();
-			guestUpdate = modelMapper.map(guest, GuestEntity.class);	
+			guestUpdate = modelMapper.map(guest, GuestEntity.class);
 			guestRepository.save(guestUpdate);
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("ok", "Insert Guest successfully", guest));
@@ -76,8 +76,8 @@ public class GuestServiceImpl implements GuestService {
 					StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
 					guestDTO.setStudentObject(studentDTO);
 					results.add(guestDTO);
-				}			
-			}		
+				}
+			}
 		}
 		return results;
 
@@ -103,10 +103,10 @@ public class GuestServiceImpl implements GuestService {
 		if (guestEntity.getId() != 0) {
 			guestRepository.deleteById(id);
 			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
-			
+
+
+		}
 
 	}
-
-}
 
 }
