@@ -38,7 +38,7 @@ public class StudentEntity extends BaseEntity{
 	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL) // cascade=CascadeType.ALL có tác dụng đồng bộ 2 bảng với nhau với nhau bảng này bị xóa bảng kia cũng bị xóa
 	private List<GuestEntity> guest;
 	
-	@OneToOne(mappedBy = "studentEntity")
+	@OneToOne(mappedBy = "studentEntity", cascade = CascadeType.ALL)
 	private VehicleEntity vehicleEntity;
 
 	@OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL)

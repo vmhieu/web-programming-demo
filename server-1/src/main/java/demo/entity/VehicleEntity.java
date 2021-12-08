@@ -13,7 +13,7 @@ public class VehicleEntity extends BaseEntity {
 	@Column(name = "has_ticket")
 	private boolean hasTicket;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentEntity;
 
@@ -25,14 +25,6 @@ public class VehicleEntity extends BaseEntity {
 		this.numberPlate = numberPlate;
 	}
 
-	public StudentEntity getStudent_vehicle() {
-		return studentEntity;
-	}
-
-	public void setStudent_vehicle(StudentEntity student_vehicle) {
-		this.studentEntity = student_vehicle;
-	}
-
 	public boolean isHasTicket() {
 		return hasTicket;
 	}
@@ -41,4 +33,11 @@ public class VehicleEntity extends BaseEntity {
 		this.hasTicket = hasTicket;
 	}
 
+	public StudentEntity getStudentEntity() {
+		return studentEntity;
+	}
+
+	public void setStudentEntity(StudentEntity studentEntity) {
+		this.studentEntity = studentEntity;
+	}
 }

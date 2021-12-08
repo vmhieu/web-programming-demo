@@ -59,65 +59,68 @@ function Service(props) {
     }
 
     return (
-        <div>
-            <div>
-                <Button onClick={() => {
-                    handleSelect("" , "add")
-                }} style={{ margin: "0  0  15px 30px", borderRadius: "15px" }} icon={<PlusOutlined />}>Thêm mới</Button>
-                <Button onClick={() => {
-                    setData(false)
-                    _requestData()
-                }} style={{ margin: "0  0  15px 5px", borderRadius: "15px"  }} icon={<ReloadOutlined />}>Làm mới</Button>
-            </div>
-            <Table
-                columns={columns}
-                dataSource={data}
-                onRow={(r) => ({
-                    onClick: () => {
-                        _handleRow(r)
-                    },
-                })}
-            />
-            <div style={{ display: "flex", justifyContent: 'center', alignContent: 'center' }}>
-                <Modal
-                    title="Chỉnh sửa"
-                    visible={row}
-                    footer={null}
-                    // style={{width: 250}}
-                    minWidth={400}
-                    onCancel={() => {
-                        setRow(false)
-                        setOption("");
-                    }}
-                    bodyStyle={{ borderRadius: '15px' }}
-                >
-                    <div style={{ display: "flex", justifyContent: "space-around" }}>
-                        <Button
-                            style={{ alignItems: "center", width: '120px', height: '60px', borderRadius: '10px', backgroundColor: "DodgerBlue" }}
-                            onClick={() => handleSelect(row, "edit")}
-                        >
-                            <EditOutlined />
-                            Chỉnh sửa
-                        </Button>
-                        <Button
-                            style={{ display: "flex", alignItems: "center", width: '120px', height: '60px', borderRadius: '10px', backgroundColor: "#616161" }}
-                            onClick={() => handleSelect(row, "del")}
-                            type="danger"
-                        >
-                            <DeleteOutlined />
-                            Xóa
-                        </Button>
-                    </div>
-                </Modal>
-            </div>
-            <ModalForm
-                visible={modalForm}
-                onCancel={() => {
-                    console.log("asdada")
-                    setModalForm(false)
-                }}
-            />
+        // <div>
+        //     <div>
+        //         <Button onClick={() => {
+        //             handleSelect("" , "add")
+        //         }} style={{ margin: "0  0  15px 30px", borderRadius: "15px" }} icon={<PlusOutlined />}>Thêm mới</Button>
+        //         <Button onClick={() => {
+        //             setData(false)
+        //             _requestData()
+        //         }} style={{ margin: "0  0  15px 5px", borderRadius: "15px"  }} icon={<ReloadOutlined />}>Làm mới</Button>
+        //     </div>
+        //     <Table
+        //         columns={columns}
+        //         dataSource={data}
+        //         onRow={(r) => ({
+        //             onClick: () => {
+        //                 _handleRow(r)
+        //             },
+        //         })}
+        //     />
+        //     <div style={{ display: "flex", justifyContent: 'center', alignContent: 'center' }}>
+        //         <Modal
+        //             title="Chỉnh sửa"
+        //             visible={row}
+        //             footer={null}
+        //             // style={{width: 250}}
+        //             minWidth={400}
+        //             onCancel={() => {
+        //                 setRow(false)
+        //                 setOption("");
+        //             }}
+        //             bodyStyle={{ borderRadius: '15px' }}
+        //         >
+        //             <div style={{ display: "flex", justifyContent: "space-around" }}>
+        //                 <Button
+        //                     style={{ alignItems: "center", width: '120px', height: '60px', borderRadius: '10px', backgroundColor: "DodgerBlue" }}
+        //                     onClick={() => handleSelect(row, "edit")}
+        //                 >
+        //                     <EditOutlined />
+        //                     Chỉnh sửa
+        //                 </Button>
+        //                 <Button
+        //                     style={{ display: "flex", alignItems: "center", width: '120px', height: '60px', borderRadius: '10px', backgroundColor: "#616161" }}
+        //                     onClick={() => handleSelect(row, "del")}
+        //                     type="danger"
+        //                 >
+        //                     <DeleteOutlined />
+        //                     Xóa
+        //                 </Button>
+        //             </div>
+        //         </Modal>
+        //     </div>
+        //     <ModalForm
+        //         visible={modalForm}
+        //         onCancel={() => {
+        //             console.log("asdada")
+        //             setModalForm(false)
+        //         }}
+        //     />
 
+        // </div>
+        <div>
+            
         </div>
     );
 }

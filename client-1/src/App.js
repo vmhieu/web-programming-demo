@@ -6,6 +6,9 @@ import Visiter from "./components/visiter";
 import Service from "./components/service";
 import { useEffect } from "react";
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
+import Food from "./components/Service/food-service";
+import Packing from "./components/Service/packing-service";
+import Laundry from "./components/Service/laundry-service";
 function App() {
 
 
@@ -42,6 +45,17 @@ function App() {
         </TabPane>
         <TabPane tab="Quản lý dịch vụ" key="4">
           <Service />
+          <Tabs defaultActiveKey="1" centered>
+            <TabPane tab="Food" key="1">
+              <Food />
+            </TabPane>
+            <TabPane tab="Packing" key="2">
+              <Packing />
+            </TabPane>
+            <TabPane tab="Laundry" key="3">
+              <Laundry />
+            </TabPane>
+          </Tabs>
         </TabPane>
       </Tabs>
 
