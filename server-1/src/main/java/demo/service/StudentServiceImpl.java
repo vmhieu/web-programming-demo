@@ -37,8 +37,8 @@ public class StudentServiceImpl implements StudentService{
 
 		StudentEntity studentEntity = new StudentEntity();
 		studentEntity = modelMapper.map(student, StudentEntity.class);
-		RoomEntity roomEntity = roomRepository.findById(student.getRoomID());
-		studentEntity.setRooms(roomEntity);
+//		RoomEntity roomEntity = roomRepository.findById(student.getRoomID());
+//		studentEntity.setRooms(roomEntity);
 	//	if(studentEntity.getId() == Student.getStudentID() ) {
 			studentEntity = studentRepository.save(studentEntity);
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "create successfully", ""));

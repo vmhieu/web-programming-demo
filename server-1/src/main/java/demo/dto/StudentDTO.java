@@ -10,8 +10,8 @@ public class StudentDTO extends AbstractDTO{
 	private Date birthDate;
 	private String grade;
 	private String address;
-	private long roomID;
-	private Object roomObject;
+//	private long roomID;
+//	private Object roomObject;
 	public String getName() {
 		return name;
 	}
@@ -42,28 +42,13 @@ public class StudentDTO extends AbstractDTO{
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-	public String getAddres() {
+	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
 	
-	public long getRoomID() {
-		return roomID;
-	}
-	public void setRoomID(long roomID) {
-		this.roomID = roomID;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public Object getRoomObject() {
-		return roomObject;
-	}
-	public void setRoomObject(Object roomObject) {
-		this.roomObject = roomObject;
-	}
 	
 	
 }

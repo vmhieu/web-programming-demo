@@ -39,13 +39,13 @@ public class StudentEntity extends BaseEntity{
 	private String address;
 	
 	@ManyToOne
-	@JoinColumn(name = "room_id")
+	@JoinColumn(name = "room_id",nullable = false , referencedColumnName = "id")
 	private RoomEntity rooms;
 	
 //	@OneToMany(mappedBy="students_bill")
 //	private List<BillEntity> bill;
 	
-	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL) // cascade=CascadeType.ALL có tác dụng đồng bộ 2 bảng với nhau với nhau bảng này bị xóa bảng kia cũng bị xóa
 	private List<GuestEntity> guest;
 	
 //	@OneToMany(mappedBy="students_vehicle")
