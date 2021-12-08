@@ -103,7 +103,7 @@ public class StudentServiceImpl implements StudentService{
 		StudentEntity StudentEntity = studentRepository.findById(id);
 		if (StudentEntity.getId() != 0) {
 			studentRepository.deleteById(id);
-			StudentDTO StudentDTO = modelMapper.map(StudentEntity, StudentDTO.class);
+		//	StudentDTO StudentDTO = modelMapper.map(StudentEntity, StudentDTO.class);
 			
 
 	}

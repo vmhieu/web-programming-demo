@@ -46,8 +46,8 @@ public class StudentController {
 		return StudentService.getById(id);
 	}
 	
-	@DeleteMapping(value = "/api/student/{id}")
-	public void delete(@RequestBody long id) {
-		StudentService.delete(id);
+	@DeleteMapping(value = "/api/student/{id1}")
+	public void delete(@RequestBody long id, @PathVariable long id1) {
+		StudentService.delete(id1);
 	}
 }

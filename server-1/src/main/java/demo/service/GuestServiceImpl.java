@@ -86,9 +86,12 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public ResponseEntity<ResponseObject> getById(long id) {
 		GuestEntity guestEntity = guestRepository.findById(id).get();
+		System.out.println(guestEntity.getStudentID());
+	//	StudentEntity studentEntity = studentRepository.findById(guestEntity.getStudentID());
 		if (guestEntity.getId() != 0) {
-
 			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
+	//		StudentDTO studentDTO = modelMapper.map(studentEntity, StudentDTO.class);
+//			guestDTO.setStudentObject(studentDTO);
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("ok", "Get successfully", guestDTO));
 		} else {
