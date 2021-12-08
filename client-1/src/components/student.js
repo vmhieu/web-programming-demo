@@ -1,12 +1,13 @@
+import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined } from '@ant-design/icons';
+import { Button, Modal, notification, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Alert ,notification  } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined ,CheckOutlined ,TwitterOutlined} from '@ant-design/icons';
+import { studentAPI } from '../fake-api/student-API';
 import ModalForm from './Form/FormStudent/ModalForm';
-import { studentAPI } from '../fake-api/student-API';;
+;
 
 const Student = (props) => {
 
-    const [row, setRow] = React.useState(false);
+    const [row, setRow] = useState(false);
     const [data, setData] = useState([])
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
@@ -30,6 +31,7 @@ const Student = (props) => {
         });
       };
     const _handleRow = (val) => {
+        console.log("row" ,val)
         setRow(val);
     }
     const handleSelect =  (data, type) => {

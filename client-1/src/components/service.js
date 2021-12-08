@@ -67,7 +67,7 @@ function Service(props) {
                 <Button onClick={() => {
                     setData(false)
                     _requestData()
-                }} style={{ margin: "0  0  15px 5px", borderRadius: "15px" }} icon={<ReloadOutlined />}>Làm mới</Button>
+                }} style={{ margin: "0  0  15px 5px", borderRadius: "15px"  }} icon={<ReloadOutlined />}>Làm mới</Button>
             </div>
             <Table
                 columns={columns}
