@@ -20,7 +20,7 @@ public class ServiceEntity extends BaseEntity{
 	@Column
 	private float price;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentEntity;
 
