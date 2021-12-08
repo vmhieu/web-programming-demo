@@ -33,35 +33,42 @@ public class StudentServiceImpl implements StudentService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public ResponseEntity<ResponseObject> create(StudentDTO student) {
-
-		StudentEntity studentEntity = new StudentEntity();
-		studentEntity = modelMapper.map(student, StudentEntity.class);
-		RoomEntity roomEntity = roomRepository.findById(student.getRoomID());
-		studentEntity.setRooms(roomEntity);
-	//	if(studentEntity.getId() == Student.getStudentID() ) {
-			studentEntity = studentRepository.save(studentEntity);
-			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "create successfully", ""));
-//		} else {
-//			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-//					.body(new ResponseObject("failed", "Insert Student successfully", ""));
-//		}
+	public ResponseEntity<?> create(StudentDTO student) {
+		
+		try {
+			StudentEntity studentEntity = modelMapper.map(student, StudentEntity.class);
+			Optional<RoomEntity> roomEntity = roomRepository.findById(student.getRoomID());
+			if(!roomEntity.isPresent()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ResponseObject("failed", "Phòng không tồn tại"));
+			} else {
+				studentEntity.setRoom(roomEntity.get());
+				studentEntity = studentRepository.save(studentEntity);
+				return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Tạo mới sinh viên thành công"));
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ResponseObject("failed", "Internal Server Error!!! " + e.toString()));
+		}
+		
+		
 		
 	}
 
 	@Override
-	public ResponseEntity<ResponseObject> update(StudentDTO student) {
-
-		StudentEntity studentDb = this.studentRepository.findById(student.getId());
-		if (studentDb.getId() != 0) {
-//			StudentEntity studentUpdate = studentDb.get();
-			studentDb = modelMapper.map(student, StudentEntity.class);	
-			studentRepository.save(studentDb);
+	public ResponseEntity<?> update(StudentDTO student) {
+		
+		Optional<StudentEntity> studentEntity = this.studentRepository.findById(student.getId());
+		if (studentEntity.isPresent()) {
+			StudentEntity studentUpdate = studentEntity.get();		
+			studentUpdate = modelMapper.map(student, StudentEntity.class);	
+			studentRepository.save(studentUpdate);
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("ok", "Insert Student successfully", student));
+					.body(new ResponseObject("ok", "Cập nhật sinh viên thành công", student));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ResponseObject("failed", "Insert Student successfully", ""));
+					.body(new ResponseObject("failed", "Cập nhật sinh viên thất bại"));
 		}
 	}
 
@@ -69,43 +76,42 @@ public class StudentServiceImpl implements StudentService{
 	public List<StudentDTO> getAll() {
 		List<StudentDTO> results = new ArrayList<>();
 		List<StudentEntity> entities = studentRepository.findAll();
-		List<RoomEntity> roomEntities = roomRepository.findAll();
 		for (StudentEntity item : entities) {
-			for(RoomEntity roomEntity : roomEntities) {
+				RoomEntity roomEntity = item.getRoom();
 				StudentDTO studentDTO = modelMapper.map(item, StudentDTO.class);
-				if(roomEntity.getId() == studentDTO.getRoomID() ) {
 					RoomDTO roomDTO = modelMapper.map(roomEntity, RoomDTO.class);
-					studentDTO.setRoomObject(roomDTO);
+					studentDTO.setRoomObject1(roomDTO);
 					results.add(studentDTO);
-				}			
-			}		
 		}
 		return results;
 
 	}
 
 	@Override
-	public ResponseEntity<ResponseObject> getById(long id) {
-		StudentEntity studentEntity = studentRepository.findById(id);
-		if (studentEntity.getId() != 0) {
-
-			StudentDTO StudentDTO = modelMapper.map(studentEntity, StudentDTO.class);
+	public ResponseEntity<?> getById(long id) {
+		Optional<StudentEntity> studentEntity = studentRepository.findById(id);
+		if (studentEntity.isPresent()) {
+			StudentEntity studentEntity2 = studentEntity.get();
+			RoomEntity roomEntity = studentEntity2.getRoom();
+			StudentDTO studentDTO = modelMapper.map(studentEntity2, StudentDTO.class);
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("ok", "Get successfully", StudentDTO));
+					.body(new ResponseObject("ok", "Thành công", studentDTO));
 		} else {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("failed", " successfully", ""));
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ResponseObject("failed", "Không tìm thấy sinh viên", ""));
 		}
 	}
 
 	@Override
-	public void delete(long id) {
-		StudentEntity StudentEntity = studentRepository.findById(id);
-		if (StudentEntity.getId() != 0) {
+	public ResponseEntity<?> delete(long id) {
+		Optional<StudentEntity> studentEntity = studentRepository.findById(id);
+		if (studentEntity.isPresent()) {
 			studentRepository.deleteById(id);
-		//	StudentDTO StudentDTO = modelMapper.map(StudentEntity, StudentDTO.class);
-			
-
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseObject("ok", "Xoá sinh viên thành công"));
+	} else {
+		return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+				.body(new ResponseObject("failed", "Xoá sinh viên thất bại"));
 	}
 
 }

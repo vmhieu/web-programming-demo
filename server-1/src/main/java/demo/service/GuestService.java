@@ -9,10 +9,11 @@ import demo.entity.GuestEntity;
 import demo.entity.ResponseObject;
 
 public interface GuestService {
-	ResponseEntity<ResponseObject> create(GuestDTO guest);
-	ResponseEntity<ResponseObject> update(GuestDTO guest);
+	ResponseEntity<?> create(GuestDTO guest);
+	ResponseEntity<?> update(GuestDTO guest);
 	List<GuestDTO> getAll();
-	ResponseEntity<ResponseObject> getById(long id);
+	ResponseEntity<?> getById(long id);
 //	ResponseEntity<GuestDTO> getName(); 
-	void delete(long id);
+//	void delete(long id);
+	ResponseEntity<?> delete(long id);
 }

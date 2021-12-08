@@ -3,17 +3,7 @@ package demo.entity;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "student")
@@ -38,22 +28,21 @@ public class StudentEntity extends BaseEntity{
 	@Column(name = "address")
 	private String address;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name = "room_id")
-	private RoomEntity rooms;
+	private RoomEntity room;
 	
 //	@OneToMany(mappedBy="students_bill")
 //	private List<BillEntity> bill;
 	
-	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL) // cascade=CascadeType.ALL có tác dụng đồng bộ 2 bảng với nhau với nhau bảng này bị xóa bảng kia cũng bị xóa
 	private List<GuestEntity> guest;
 	
-//	@OneToMany(mappedBy="students_vehicle")
-//	private List<VehicleEntity> vehicle;
-//	
-//	@OneToMany(mappedBy="students_service")
-//	private List<ServiceEntity> service;
+	@OneToOne(mappedBy = "studentEntity")
+	private VehicleEntity vehicleEntity;
 
+	@OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL)
+	private List<ServiceEntity> serviceEntities;
 
 	public String getName() {
 		return name;
@@ -111,13 +100,7 @@ public class StudentEntity extends BaseEntity{
 		this.guest = guest;
 	}
 
-	public RoomEntity getRooms() {
-		return rooms;
-	}
 
-	public void setRooms(RoomEntity rooms) {
-		this.rooms = rooms;
-	}
 
 //	public List<BillEntity> getBill() {
 //		return bill;
@@ -129,11 +112,11 @@ public class StudentEntity extends BaseEntity{
 
 	
 
-//	public List<VehicleEntity> getVehicle() {
+//	public List<VehicleEntity> getVehicleEntity() {
 //		return vehicle;
 //	}
 //
-//	public void setVehicle(List<VehicleEntity> vehicle) {
+//	public void setVehicleEntity(List<VehicleEntity> vehicle) {
 //		this.vehicle = vehicle;
 //	}
 //
@@ -144,6 +127,29 @@ public class StudentEntity extends BaseEntity{
 //	public void setService(List<ServiceEntity> service) {
 //		this.service = service;
 //	}
-	
-	
+
+
+	public RoomEntity getRoom() {
+		return room;
+	}
+
+	public void setRoom(RoomEntity room) {
+		this.room = room;
+	}
+
+	public VehicleEntity getVehicleEntity() {
+		return vehicleEntity;
+	}
+
+	public void setVehicleEntity(VehicleEntity vehicleEntity) {
+		this.vehicleEntity = vehicleEntity;
+	}
+
+	public List<ServiceEntity> getServiceEntities() {
+		return serviceEntities;
+	}
+
+	public void setServiceEntities(List<ServiceEntity> serviceEntities) {
+		this.serviceEntities = serviceEntities;
+	}
 }

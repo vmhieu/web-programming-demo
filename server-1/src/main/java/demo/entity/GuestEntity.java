@@ -29,7 +29,7 @@ public class GuestEntity extends BaseEntity{
 	@CreatedDate
 	private Date createdDate;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentID;
 	

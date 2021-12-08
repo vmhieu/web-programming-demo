@@ -9,9 +9,9 @@ import demo.entity.ResponseObject;
 
 public interface StudentService {
 
-	ResponseEntity<ResponseObject> create(StudentDTO Student);
-	ResponseEntity<ResponseObject> update(StudentDTO Student);
+	ResponseEntity<?> create(StudentDTO Student);
+	ResponseEntity<?> update(StudentDTO Student);
 	List<StudentDTO> getAll();
-	ResponseEntity<ResponseObject> getById(long id);
-	void delete(long id);
+	ResponseEntity<?> getById(long id);
+	ResponseEntity<?> delete(long id);
 }

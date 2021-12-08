@@ -1,5 +1,6 @@
 package demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public abstract class BaseEntity {
 
 	@Id  //primary key + not null
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //tu dong tang gia tri id, GeneratedValue day la khoa chinh
+	@Column(name = "id")
 	private long id;
 
 	public long getId() {
