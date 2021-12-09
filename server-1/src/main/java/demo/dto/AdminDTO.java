@@ -1,17 +1,9 @@
-package demo.entity;
+package demo.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+public class AdminDTO extends AbstractDTO{
 
-@Entity
-@Table(name = "admin")
-public class AdminEntity extends BaseEntity{
-
-	@Column(name = "username")
 	private String username;
-	
-	@Column(name = "password")
+
 	private String password;
 
 	public String getUsername() {

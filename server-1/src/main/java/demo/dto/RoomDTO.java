@@ -1,5 +1,7 @@
 package demo.dto;
 
+import java.util.List;
+
 public class RoomDTO extends AbstractDTO{
 
 	private String type;
@@ -7,7 +9,8 @@ public class RoomDTO extends AbstractDTO{
 	private int total;
 	private int maximum;
 //	private long studentID;
-//	private Object studentRoom;
+//	private Object studentObject;
+	private List<StudentDTO> listStudent;
 	public String getType() {
 		return type;
 	}

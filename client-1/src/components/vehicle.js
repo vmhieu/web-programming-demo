@@ -3,30 +3,28 @@ import { Table, Tag, Space, Tabs, Modal, Button, Alert,notification } from 'antd
 import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined,TwitterOutlined ,CheckOutlined} from '@ant-design/icons';
 import ModalForm from './Form/FormRooms/ModalForm';
 import { roomAPI, serviceAPI, visiterAPI } from '../fake-api/student-API';
-import { getAllRooms } from '../service/account';
-import axios from 'axios';
+import { getAllVehicle } from '../service/account';
 
 
-function Rooms(props) {
+function Vehicle(props) {
 
 
     const [row, setRow] = useState(false);
     const [data, setData] = useState([])
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
-    const _requestData = async (param ={}) => {
-        const data = await getAllRooms()
-        console.log("datassssssssss", data.data)
-        const dataConvert = data.data.map(i => {
-            return i
-        })
-        setData(dataConvert)
+    const _requestData = async () => {
+        const data = await roomAPI()
+		const vehicleData = await getAllVehicle();
+		console.log(vehicleData.data);
+        console.log("data", data)
+        setData(data)
     }
 
 
     useEffect(() => {
         _requestData()
-    } ,[])
+    })
 
     const openNotification = () => {
         notification.open({
@@ -39,7 +37,7 @@ function Rooms(props) {
     const _handleRow = (val) => {
         setRow(val);
     }
-    const handleSelect = async (data, type) => {
+    const handleSelect =  (data, type) => {
         if (type == "edit") {
             setRow(false);
             setModalForm({
@@ -55,17 +53,10 @@ function Rooms(props) {
             })
         }
         if (type == "del") {
-            // console.log({data , type})
             setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
-               try {
-                await axios.delete(`http://localhost:8080/api/room/${data.id}`)
                 openNotification()
-                _requestData();
-               } catch (error) {
-                   console.log("err" ,error)
-               }
             }
         }
     }
@@ -136,14 +127,14 @@ function Rooms(props) {
 
 const columns = [
     {
-        title : 'id',
-        dataIndex : 'id',
-        key : 'id'
+        title : 'Đơn Giá',
+        dataIndex : 'priceUnit',
+        key : 'priceUnit'
     },
     {
-        title : "Kiểu phòng" , 
-        dataIndex : 'type',
-        key : 'type'
+        title : "Total" , 
+        dataIndex : 'total',
+        key : 'total'
     },
     {
         title : 'Số người tối đa',
@@ -151,15 +142,10 @@ const columns = [
         key : 'maximum'
     },
     {
-        title : "Tổng số người",
-        dataIndex : 'total',
-        key : 'total'
-    },
-    {
-        title : 'Giá',
-        dataIndex : 'priceUnit',
-        key : 'priceUnit'
+		title : 'Số người tối đa',
+        dataIndex : 'maximum',
+        key : 'maximum'
     }
 ]
 
-export default Rooms;
+export default Vehicle;
