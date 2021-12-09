@@ -28,9 +28,9 @@ public class StudentEntity extends BaseEntity{
 	@Column(name = "address")
 	private String address;
 	
-	@ManyToOne
-	@JoinColumn(name = "room_id",nullable = false )
-	private RoomEntity rooms;
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name = "room_id")
+	private RoomEntity room;
 	
 //	@OneToMany(mappedBy="students_bill")
 //	private List<BillEntity> bill;
@@ -100,13 +100,7 @@ public class StudentEntity extends BaseEntity{
 		this.guest = guest;
 	}
 
-	public RoomEntity getRooms() {
-		return rooms;
-	}
 
-	public void setRooms(RoomEntity rooms) {
-		this.rooms = rooms;
-	}
 
 //	public List<BillEntity> getBill() {
 //		return bill;
@@ -134,6 +128,14 @@ public class StudentEntity extends BaseEntity{
 //		this.service = service;
 //	}
 
+
+	public RoomEntity getRoom() {
+		return room;
+	}
+
+	public void setRoom(RoomEntity room) {
+		this.room = room;
+	}
 
 	public VehicleEntity getVehicleEntity() {
 		return vehicleEntity;

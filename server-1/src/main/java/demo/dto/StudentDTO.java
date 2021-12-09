@@ -11,7 +11,7 @@ public class StudentDTO extends AbstractDTO{
 	private String grade;
 	private String address;
 	private long roomID;
-	private Object roomObject;
+	private Object roomObject1;
 	public String getName() {
 		return name;
 	}
@@ -54,6 +54,7 @@ public class StudentDTO extends AbstractDTO{
 	public void setRoomID(long roomID) {
 		this.roomID = roomID;
 	}
+<<<<<<< HEAD
 	public Object getRoomObject() {
 		return roomObject;
 	}
@@ -63,5 +64,19 @@ public class StudentDTO extends AbstractDTO{
 	
 	
 	
+=======
+//	public Object getRoomObject() {
+//		return roomObject;
+//	}
+//	public void setRoomObject(Object roomObject) {
+//		this.roomObject = roomObject;
+//	}
+	public Object getRoomObject1() {
+		return roomObject1;
+	}
+	public void setRoomObject1(Object roomObject1) {
+		this.roomObject1 = roomObject1;
+	}
+>>>>>>> 9f2decf7567d392de733f0c175093e33587b89f4
 	
 }

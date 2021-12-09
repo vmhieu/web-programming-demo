@@ -8,8 +8,6 @@ import demo.entity.StudentEntity;
 
 public interface StudentRepository extends JpaRepository<StudentEntity, Long>{
 
-	StudentEntity findById(long id);
-	List<StudentEntity> findByRooms(long id);
 	StudentEntity findByName(String name);
 	StudentEntity findByStudentCode(String studentCode);
 

@@ -42,7 +42,7 @@ public class RoomEntity extends BaseEntity{
 	
 		
 	
-	@OneToMany(mappedBy = "rooms" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "room" ,cascade = CascadeType.MERGE)
 	private List<StudentEntity> studentRoom;
 
 	public String getType() {

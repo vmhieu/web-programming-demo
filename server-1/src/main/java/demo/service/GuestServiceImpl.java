@@ -1,7 +1,6 @@
 package demo.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,35 +31,41 @@ public class GuestServiceImpl implements GuestService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public ResponseEntity<ResponseObject> create(GuestDTO guest) {
+	public ResponseEntity<?> create(GuestDTO guest) {
 
-		GuestEntity guestEntity = new GuestEntity();
-		guestEntity = modelMapper.map(guest, GuestEntity.class);
-		StudentEntity studentEntity = studentRepository.findById(guest.getStudentID());
-		guestEntity.setStudentID(studentEntity);
-		//	if(studentEntity.getId() == guest.getStudentID() ) {
-		guestEntity = guestRepository.save(guestEntity);
-		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "create successfully", ""));
-//		} else {
-//			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-//					.body(new ResponseObject("failed", "Insert Guest successfully", ""));
-//		}
+		try {
+			GuestEntity guestEntity = modelMapper.map(guest, GuestEntity.class);
+			Optional<StudentEntity> studentEntity = studentRepository.findById(guest.getStudentID());
+			System.out.println(guest.getStudentID());
+			if (!studentEntity.isPresent()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ResponseObject("fail", "Sinh viên không tồn tại"));
+			} else {
+				guestEntity.setStudentID(studentEntity.get());
+				guestRepository.save(guestEntity);
+				return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Tạo mới khách thành công"));
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
+		}
 
 	}
 
 	@Override
-	public ResponseEntity<ResponseObject> update(GuestDTO guest) {
+	public ResponseEntity<?> update(GuestDTO guest) {
 
 		Optional<GuestEntity> guestDb = this.guestRepository.findById(guest.getId());
 		if (guestDb.isPresent()) {
 			GuestEntity guestUpdate = guestDb.get();
 			guestUpdate = modelMapper.map(guest, GuestEntity.class);
 			guestRepository.save(guestUpdate);
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("ok", "Insert Guest successfully", guest));
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Cập nhật thành công", guest));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ResponseObject("failed", "Insert Guest successfully", ""));
+					.body(new ResponseObject("failed", "Cập nhật thất bại"));
 		}
 	}
 
@@ -68,43 +73,43 @@ public class GuestServiceImpl implements GuestService {
 	public List<GuestDTO> getAll() {
 		List<GuestDTO> results = new ArrayList<>();
 		List<GuestEntity> entities = guestRepository.findAll();
-		List<StudentEntity> studentEntities = studentRepository.findAll();
+
 		for (GuestEntity item : entities) {
-			for(StudentEntity student : studentEntities) {
-				GuestDTO guestDTO = modelMapper.map(item, GuestDTO.class);
-				if(student.getId() == guestDTO.getStudentID() ) {
-					StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
-					guestDTO.setStudentObject(studentDTO);
-					results.add(guestDTO);
-				}
-			}
+			StudentEntity studentEntity = item.getStudentID();
+			GuestDTO guestDTO = modelMapper.map(item, GuestDTO.class);
+			StudentDTO studentDTO = modelMapper.map(studentEntity, StudentDTO.class);
+			guestDTO.setStudentObject(studentDTO);
+			results.add(guestDTO);
 		}
 		return results;
 
 	}
 
 	@Override
-	public ResponseEntity<ResponseObject> getById(long id) {
-		GuestEntity guestEntity = guestRepository.findById(id).get();
-		if (guestEntity.getId() != 0) {
-
-			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("ok", "Get successfully", guestDTO));
+	public ResponseEntity<?> getById(long id) {
+		Optional<GuestEntity> guestEntity = guestRepository.findById(id);
+		if (guestEntity.isPresent()) {
+			GuestEntity guestEntity2 = guestEntity.get();	
+			StudentEntity studentEntity = guestEntity2.getStudentID();
+			GuestDTO guestDTO = modelMapper.map(guestEntity2, GuestDTO.class);
+			StudentDTO studentDTO = modelMapper.map(studentEntity, StudentDTO.class);
+			guestDTO.setStudentObject(studentDTO);
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Thành công", guestDTO));
 		} else {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("failed", " successfully", ""));
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("failed", "Không tìm thấy khách"));
 		}
 	}
 
 	@Override
-	public void delete(long id) {
-		GuestEntity guestEntity = guestRepository.findById(id).get();
-		if (guestEntity.getId() != 0) {
+	public ResponseEntity<?> delete(long id) {
+		Optional<GuestEntity> guestEntity = guestRepository.findById(id);
+		if (guestEntity.isPresent()) {
+			guestEntity.get();
 			guestRepository.deleteById(id);
-			GuestDTO guestDTO = modelMapper.map(guestEntity, GuestDTO.class);
-
-
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Xoá khách thành công"));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ResponseObject("failed", "Xoá khách thất bại"));
 		}
 
 	}

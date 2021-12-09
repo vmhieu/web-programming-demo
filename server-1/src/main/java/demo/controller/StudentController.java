@@ -25,12 +25,12 @@ public class StudentController {
 	private StudentService StudentService;
 	
 	@PostMapping(value = "/api/student")
-	public ResponseEntity<ResponseObject> create(@RequestBody StudentDTO model){
+	public ResponseEntity<?> create(@RequestBody StudentDTO model){
 		return StudentService.create(model);
 	}
 	
 	@PutMapping(value = "/api/student/{id}")
-	public ResponseEntity<ResponseObject> update(@PathVariable("id") long id, @RequestBody StudentDTO model){
+	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody StudentDTO model){
 		model.setId(id);
 		return StudentService.update(model);
 	}
@@ -42,12 +42,12 @@ public class StudentController {
 	}
 	
 	@GetMapping(value = "/api/student/{id}")
-	public ResponseEntity<ResponseObject> getById(@PathVariable long id){
+	public ResponseEntity<?> getById(@PathVariable long id){
 		return StudentService.getById(id);
 	}
 	
 	@DeleteMapping(value = "/api/student/{id}")
-	public void delete(@RequestBody long id) {
-		StudentService.delete(id);
+	public ResponseEntity<?> delete(@PathVariable long id) {
+		return StudentService.delete(id);
 	}
 }

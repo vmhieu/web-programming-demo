@@ -35,19 +35,14 @@ public class RoomDTO extends AbstractDTO{
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
 	}
-//	public Object getStudentObject() {
-//		return studentObject;
+//	public Object getStudentRoom() {
+//		return studentRoom;
 //	}
-//	public void setStudentObject(Object studentObject) {
-//		this.studentObject = studentObject;
+//	public void setStudentRoom(Object studentRoom) {
+//		this.studentRoom = studentRoom;
 //	}
-	public List<StudentDTO> getListStudent() {
-		return listStudent;
-	}
-	public void setListStudent(List<StudentDTO> listStudent) {
-		this.listStudent = listStudent;
-	}
-
-
+	
+	
+	
 	
 }
