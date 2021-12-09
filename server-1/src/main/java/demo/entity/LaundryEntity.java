@@ -1,5 +1,18 @@
 package demo.entity;
 
-public class LaundryEntity {
+import javax.persistence.*;
 
+@Entity
+public class LaundryEntity extends ServiceEntity {
+	
+	@Column
+	private float weight;
+	
+	public float getWeight() {
+		return weight;
+	}
+	
+	public void setWeight(float weight) {
+		this.weight= weight;
+	}
 }
