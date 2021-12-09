@@ -3,6 +3,7 @@ import { Table, Tag, Space, Tabs, Modal, Button, Alert,notification } from 'antd
 import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined,TwitterOutlined ,CheckOutlined} from '@ant-design/icons';
 import ModalForm from './Form/FormVisiter/ModalForm';
 import { visiterAPI } from '../fake-api/student-API';
+import { getAllGuest } from '../service/account';
 
 
 function Visiter(props) {
@@ -13,15 +14,18 @@ function Visiter(props) {
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
     const _requestData = async () => {
-        const data = await visiterAPI()
+        const data = await getAllGuest()
         console.log("data", data)
-        setData(data)
+        const dataConvert = data.data.map(i => {
+            return i
+        })
+        setData(dataConvert)
     }
 
 
     useEffect(() => {
         _requestData()
-    })
+    }, [])
 
     const openNotification = () => {
         notification.open({
@@ -126,24 +130,29 @@ function Visiter(props) {
 
 const columns = [
     {
-        title : "Name" , 
+        title : "Họ tên" , 
         dataIndex : 'name',
         key : 'name'
-    },
-    {
-        title : 'BirthDate',
-        dataIndex : 'birthDate',
-        key : 'birthDate'
-    },
-    {
-        title : 'Date',
-        dataIndex : 'date',
-        key : 'date'
     },
     {
         title : 'CMT',
         dataIndex : 'identificationNo',
         key : 'identificationNo'
+    },
+    {
+        title : 'Ngày sinh',
+        dataIndex : 'birthDate',
+        key : 'birthDate'
+    },
+    {
+        title : 'Date',
+        dataIndex : 'createdDate',
+        key : 'date'
+    },
+    {
+        title : 'ID Sinh Viên',
+        dataIndex : 'studentID',
+        key : 'studentID'
     }
 ]
 

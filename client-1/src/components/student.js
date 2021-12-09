@@ -1,9 +1,9 @@
 import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Button, Modal, notification, Table } from 'antd';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { studentAPI } from '../fake-api/student-API';
+import { getAllStudent } from '../service/account';
 import ModalForm from './Form/FormStudent/ModalForm';
-;
 
 const Student = (props) => {
 
@@ -12,15 +12,18 @@ const Student = (props) => {
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
     const _requestData = async () => {
-        const data = await studentAPI()
-        console.log("data", data)
-        setData(data)
+        const data = await getAllStudent()
+        // console.log("data2134", data)
+        const dataConvert = data.data.map(i => {
+            return i
+        })
+        setData(dataConvert)
     }
 
 
     useEffect(() => {
         _requestData()
-    })
+    }, [])
 
     const openNotification = () => {
         notification.open({
@@ -30,11 +33,19 @@ const Student = (props) => {
           icon: <CheckOutlined style={{ color: '#108ee9' }} />,
         });
       };
+      const editNotification = () => {
+        notification.open({
+          message: 'Chỉnh sửa thành công',
+          description:
+          <TwitterOutlined style={{color : '#93b874'}}/> ,
+          icon: <CheckOutlined style={{ color: '#108ee9' }} />,
+        });
+      };
     const _handleRow = (val) => {
         console.log("row" ,val)
         setRow(val);
     }
-    const handleSelect =  (data, type) => {
+    const handleSelect = async (data, type) => {
         if (type == "edit") {
             console.log("duc123")
             setRow(false);
@@ -42,6 +53,13 @@ const Student = (props) => {
                 data,
                 type
             })
+            try {
+                await axios.put(`http://localhost:8080/api/student/${data.id}`)
+                editNotification()  
+                _requestData();  
+            } catch (error) {
+                console.log(error)
+            }
         }
         if(type == "add"){
             setRow(false)
@@ -49,12 +67,25 @@ const Student = (props) => {
                 data,
                 type
             })
+            // try {
+            //     await axios.post('http://localhost:8080/api/student')
+            //     _requestData();
+            // } catch (error) {
+            //     console.log("err" ,error)
+            // }
         }
         if (type == "del") {
             setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
-                openNotification()
+                try {
+                    await axios.delete(`http://localhost:8080/api/student/${data.id}`)
+                    openNotification()  
+                    _requestData();  
+                } catch (error) {
+                    console.log(error)
+                }
+                
             }
         }
     }
@@ -124,27 +155,32 @@ const Student = (props) => {
 
 const columns = [
     {
-        title: 'Name',
+        title: 'Họ tên',
         dataIndex: 'name',
         key: 'name',
     },
     {
-        title: 'StudentCode',
+        title: 'Mã sinh viên',
         dataIndex: 'studentCode',
         key: 'studentCode',
+    }, 
+    {
+        title: 'Số chứng minh thư',
+        dataIndex: 'identificationNo',
+        key: 'identificationNo',
     },
     {
-        title: 'BirthDate',
+        title: 'Ngày sinh',
         dataIndex: 'birthDate',
         key: 'birthDate'
     },
     {
-        title: 'Grade',
+        title: 'Lớp',
         dataIndex: 'grade',
         key: 'grade'
     },
     {
-        title: 'Address',
+        title: 'Địa chỉ',
         dataIndex: 'address',
         key: 'address',
     },

@@ -69,29 +69,39 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 const addAccountFormInit = [
     {
-        name: 'name',
+        name: 'Họ tên',
         label: 'Name',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
         // type: 'number'
     },
     {
-        name: 'studentCode',
+        name: 'Mã sinh viên',
         label: 'StudentCode',
         rules: [{ required: true, message: 'Bạn cần nhập tên tài khoản' }],
     },
     {
-        name: 'birthDate',
+        name: 'Số chứng minh thư',
+        label: 'Identification',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
+    },
+    {
+        name: 'Ngày sinh',
         label: 'BirthDate',
         rules: [{required : true ,message : "Không được bỏ trống"}],
     },
     {
-        name: 'grade',
+        name: 'Lớp',
         label: 'Grade',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
-        name: 'address',
+        name: 'Địa chỉ',
         label: 'Address',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
+    },
+    {
+        name: 'Phòng ở',
+        label: 'RoomID',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     
