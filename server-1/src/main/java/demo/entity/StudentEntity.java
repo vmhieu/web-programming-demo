@@ -29,7 +29,7 @@ public class StudentEntity extends BaseEntity{
 	private String address;
 	
 	@ManyToOne
-	@JoinColumn(name = "room_id",nullable = false , referencedColumnName = "id")
+	@JoinColumn(name = "room_id",nullable = false )
 	private RoomEntity rooms;
 	
 //	@OneToMany(mappedBy="students_bill")

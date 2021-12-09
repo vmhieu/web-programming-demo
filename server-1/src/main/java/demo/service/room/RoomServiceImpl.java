@@ -35,17 +35,31 @@ public class RoomServiceImpl implements RoomService {
 	public List<RoomDTO> getAll() {
 		List<RoomDTO> result = new ArrayList<>();
 		List<RoomEntity> roomEntity = roomRepository.findAll();
+//		List<StudentEntity> studentEtt = studentRepository.findAll();
+//		for (RoomEntity items : roomEntity) {
+//			for (StudentEntity student : studentEtt) {
+//				RoomDTO roomDTO = modelMapper.map(items , RoomDTO.class);
+//				if(student.getRooms().getId() == roomDTO.getId()) {
+//					StudentDTO studentDTO = modelMapper.map(studentEtt, StudentDTO.class);
+//					roomDTO.setStudentRoom(studentDTO);
+//				}
+//				result.add(roomDTO);
+//			}
+//		
+//		}
 		List<StudentEntity> studentEtt = studentRepository.findAll();
 		for (RoomEntity items : roomEntity) {
-//			for (StudentEntity student : studentEtt) {
-				RoomDTO roomDTO = modelMapper.map(items , RoomDTO.class);
-//				if(student.getId() == roomDTO.getStudentID()) {
-//					StudentDTO studentDTO = modelMapper.map(studentEtt, StudentDTO.class);
-//					roomDTO.setStudentObject(studentDTO);
-//				}
-				result.add(roomDTO);
-//			}
-		
+			int count = 0;
+			for (StudentEntity studentEntity : studentEtt) {
+				if(items.getId() == studentEntity.getRooms().getId()) {
+					count ++ ;
+				}
+				
+			}
+			items.setTotal(count);
+			roomRepository.save(items);
+			RoomDTO roomDTO = modelMapper.map(items , RoomDTO.class);
+			result.add(roomDTO);
 		}
 		return result;
 	}

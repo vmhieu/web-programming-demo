@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
 import RenderForm from './RenderForm';
-import {addStudent} from '../../../service/account'
+import {addRooms, addStudent} from '../../../service/account'
 const ModalForm = ({ visible, onCancel = () => { },
 }) => {
     console.log('visible' ,visible)
@@ -26,7 +26,7 @@ const ModalForm = ({ visible, onCancel = () => { },
         console.log('Success:', values);
         if(visible.type == "add") {
             try {
-                const res = await addStudent()
+                const res = await addRooms(values)
                 console.log("res" ,res)
             } catch (error) {
                 console.log("err" ,error)
@@ -69,19 +69,18 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 const addAccountFormInit = [
     {
+        name: 'type',
+        label: 'Kiểu phòng',
+        rules: [{required : true ,message : "Không được bỏ trống"}],
+    },
+    {
         name: 'priceUnit',
         label: 'Đơn giá',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
-        // type: 'number'
-    },
-    {
-        name: 'total',
-        label: 'Tổng số người',
-        rules: [{ required: true, message: 'Bạn cần nhập tên tài khoản' }],
     },
     {
         name: 'maximum',
-        label: 'Tổng số người tối đa',
+        label: 'Số người tối đa',
         rules: [{required : true ,message : "Không được bỏ trống"}],
     },    
 ];
