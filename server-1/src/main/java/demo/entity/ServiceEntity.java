@@ -1,8 +1,10 @@
 package demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "service")
@@ -19,6 +21,10 @@ public class ServiceEntity extends BaseEntity{
 
 	@Column
 	private float price;
+
+	@Column(name = "created_date")
+	@CreatedDate
+	private Date createdDate;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "student_id")
