@@ -12,6 +12,7 @@ public class InvoiceDTO {
     private String studentCode;
     private float roomFee;
     private float ticketFee;
+    private float totalPrice;
     private List<BillDTO> bill;
 
     public int getMonth() {
@@ -68,5 +69,13 @@ public class InvoiceDTO {
 
     public void setBill(List<BillDTO> bill) {
         this.bill = bill;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
