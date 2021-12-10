@@ -1,7 +1,11 @@
 package demo.controller;
 
 import demo.dto.ParkingDTO;
+import demo.dto.FoodDTO;
+import demo.dto.LaundryDTO;
 import demo.service.ParkingService;
+import demo.service.FoodService;
+import demo.service.LaundryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceController {
     @Autowired
     private ParkingService parkingService;
+    
+    @Autowired
+    private FoodService foodService;
+    
+    @Autowired
+    private LaundryService laundryService;
 
     @GetMapping("/parking")
     public ResponseEntity<?> getAllParking() {
@@ -35,5 +45,47 @@ public class ServiceController {
     @DeleteMapping("/parking/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         return parkingService.delete(id);
+    }
+    
+    @PostMapping("/food")
+    public ResponseEntity<?> createFood(@RequestBody FoodDTO dto) {
+    	return foodService.create(dto);
+    }
+    
+    @PutMapping("/food/{id}")
+    public ResponseEntity<?> updateFood(@PathVariable("id") long id, @RequestBody FoodDTO dto) {
+    	dto.setId(id);
+    	return foodService.update(dto);
+    }
+    
+    @GetMapping("/food")
+    public ResponseEntity<?> getAllFood() {
+        return foodService.getAll();
+    }
+    
+    @DeleteMapping("/food/{id}")
+    public ResponseEntity<?> deleteFood(@PathVariable long id) {
+        return foodService.delete(id);
+    }
+    
+    @PostMapping("/laundry")
+    public ResponseEntity<?> createLaundry(@RequestBody LaundryDTO dto) {
+    	return laundryService.create(dto);
+    }
+    
+    @PutMapping("/laundry/{id}")
+    public ResponseEntity<?> updateLaundry(@PathVariable("id") long id, @RequestBody LaundryDTO dto) {
+    	dto.setId(id);
+    	return laundryService.update(dto);
+    }
+    
+    @GetMapping("/laundry")
+    public ResponseEntity<?> getAllLaundry() {
+        return laundryService.getAll();
+    }
+    
+    @DeleteMapping("/laundry/{id}")
+    public ResponseEntity<?> deleteLaundry(@PathVariable long id) {
+        return laundryService.delete(id);
     }
 }

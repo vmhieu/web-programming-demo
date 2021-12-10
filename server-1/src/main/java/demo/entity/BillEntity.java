@@ -1,45 +1,53 @@
 package demo.entity;
 
-import java.sql.Date;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+@Entity
+@Table(name = "bill")
+public class BillEntity extends BaseEntity {
 
-public class BillEntity extends BaseEntity{
+	@Column
+	private int month;
 
-	@Column(name = "totalPrice")
-	private float total;
-	
-	@Column(name = "month")
-	private String month;
-	
-	@Column(name = "year")
-	private Date year;
+	@Column
+	private int year;
 
-	public float getTotal() {
-		return total;
-	}
+	@Column(name = "total_price")
+	private float totalPrice;
 
-	public void setTotal(float total) {
-		this.total = total;
-	}
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	private StudentEntity studentEntity;
 
-	public String getMonth() {
+	public int getMonth() {
 		return month;
 	}
 
-	public void setMonth(String month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
 
-	public Date getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(Date year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
-	
-	
+
+	public float getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public StudentEntity getStudentEntity() {
+		return studentEntity;
+	}
+
+	public void setStudentEntity(StudentEntity studentEntity) {
+		this.studentEntity = studentEntity;
+	}
 }
