@@ -54,13 +54,7 @@ const Student = (props) => {
                 type
             })
             try {
-             //   await axios.patch(`http://localhost:8080/api/student/${data.id}`)
                 await axios.put(`http://localhost:8080/api/student/${data}`, data)
-                const data = await editStudent();
-                const dataConvert = data.data.map(i => {
-                    return i
-                })
-                setData(dataConvert)
                 editNotification()  
                 _requestData();  
                 

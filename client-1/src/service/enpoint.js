@@ -5,4 +5,5 @@ export const ENDPOINTS = {
         STUDENT : '/api/student',
         ROOM : '/api/room',
         GUEST : '/api/guest',
+        LOGIN : '/api/admin'
 };

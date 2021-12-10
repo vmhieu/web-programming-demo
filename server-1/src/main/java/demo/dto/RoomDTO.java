@@ -11,6 +11,13 @@ public class RoomDTO extends AbstractDTO{
 //	private long studentID;
 //	private Object studentObject;
 	private List<StudentDTO> listStudent;
+	
+	public List<StudentDTO> getListStudent() {
+		return listStudent;
+	}
+	public void setListStudent(List<StudentDTO> listStudent) {
+		this.listStudent = listStudent;
+	}
 	public String getType() {
 		return type;
 	}
