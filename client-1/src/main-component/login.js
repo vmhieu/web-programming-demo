@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Button, Checkbox, notification } from 'antd';
 import { checkLogin } from '../service/account';
 import { SmileOutlined, AntCloudOutlined } from '@ant-design/icons'
@@ -18,6 +18,14 @@ const Login = () => {
     });
   };
 
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    if(username){
+      dispatch(login())
+      navigate('/home')
+    }
+  },[])
+
   const openNotification1 = () => {
     notification.warning({
       message: 'Tài khoản hoặc mật khẩu không chính xác',
@@ -33,6 +41,7 @@ const Login = () => {
       dispatch(login())
       openNotification()
       navigate('/home')
+      localStorage.setItem("username", username)
     } catch (error) {
       openNotification1()
     }

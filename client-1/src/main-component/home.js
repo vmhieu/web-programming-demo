@@ -27,6 +27,7 @@ const Home = () => {
     return (
         <div>
             <LogoutOutlined onClick={() => {
+                localStorage.removeItem('username')
                 dispatch(login())
                 navigate('/')
             }} style={{display : 'flex' ,justifyContent : 'flex-end' , marginRight : "50px" , fontSize : "25px"}}/>
