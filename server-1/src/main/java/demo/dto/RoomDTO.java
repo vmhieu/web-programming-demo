@@ -3,7 +3,8 @@ package demo.dto;
 import java.util.List;
 
 public class RoomDTO extends AbstractDTO{
-
+	
+	private String name;
 	private String type;
 	private float priceUnit;
 	private int total;
@@ -42,6 +43,14 @@ public class RoomDTO extends AbstractDTO{
 	public void setMaximum(int maximum) {
 		this.maximum = maximum;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+
 //	public Object getStudentRoom() {
 //		return studentRoom;
 //	}

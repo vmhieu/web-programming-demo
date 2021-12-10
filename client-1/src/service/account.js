@@ -18,6 +18,7 @@ export const editGuest = (body) => apiClient.put(ENDPOINTS.GUEST , body)
 
 export const getAllRooms = (param) => apiClient.get(ENDPOINTS.ROOM ,param)
 export const addRooms = (body) => apiClient.post(ENDPOINTS.ROOM , body)
+export const updateRooms = (body) => apiClient.put(ENDPOINTS.ROOM , body)
 
 //login
 export const checkLogin = (body) => apiClient.post(ENDPOINTS.LOGIN , body)

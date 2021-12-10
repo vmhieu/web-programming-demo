@@ -14,4 +14,6 @@ public interface RoomService {
 	ResponseEntity<ResponseObject> findById(long id);
 	ResponseEntity<ResponseObject> update(RoomDTO roomDTO);
 	ResponseEntity<ResponseObject> deleteById(long id);
+	ResponseEntity<ResponseObject> findByName(String name);
+	
 }

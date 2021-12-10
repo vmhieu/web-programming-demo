@@ -1,37 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
+import { Table, Tag, Space, Tabs, Modal, Button, Form, notification } from 'antd';
 import RenderForm from './RenderForm';
-import {addRooms, addStudent} from '../../../service/account'
+import { addRooms, addStudent, updateRooms } from '../../../service/account'
+import { TwitterOutlined, CheckOutlined, CloseOutlined} from '@ant-design/icons';
+
+
 const ModalForm = ({ visible, onCancel = () => { },
 }) => {
-    console.log('visible' ,visible)
+    console.log('visible', visible)
     const [form] = Form.useForm();
     const [dataInit, setDataInit] = useState({});
 
     useEffect(() => form.resetFields(), [dataInit]);
 
+    const openNotification = (type , msg) => {
+        notification[type]({
+            message: msg,
+            description:
+                <TwitterOutlined style={{ color: '#93b874' }} />,
+            icon: type == "success" ? <CheckOutlined style={{ color: '#108ee9' }} /> : <CloseOutlined style={{ color: 'red' }} />,
+        });
+    };
     const [addAccountForm, setAddAccountForm] = useState(addAccountFormInit);
     useEffect(() => {
-        if(visible.type == "add"){
+        if (visible.type == "add") {
             setDataInit({})
         }
-        if(visible.type == "edit"){
+        if (visible.type == "edit") {
             setDataInit(visible.data)
         }
-    } , [visible])
+    }, [visible])
 
 
-    const onFinish = async(values) => {
-        onCancel()
+    const onFinish = async (values) => {
         console.log('Success:', values);
-        if(visible.type == "add") {
+        if (visible.type == "add") {
             try {
                 const res = await addRooms(values)
-                console.log("res" ,res)
+                console.log("res", res)
+            } catch (error) {
+                console.log("err", error)
+                openNotification("warning" , "Tên phòng đã tồn tại")
+            }
+        }
+        if (visible.type == "edit") {
+            try {
+                console.log(values, "===", visible.data)
+                console.log("====" , {
+                    id : visible.data.id || "",
+                    type : values.type || "",
+                    priceUnit : values.priceUnit || "",
+                    maximum : values.maximum || ""
+                })
+                await updateRooms({
+                    id : visible.data.id || "",
+                    type : values.type || "",
+                    priceUnit : values.priceUnit || "",
+                    maximum : values.maximum || ""
+                })
             } catch (error) {
                 console.log("err" ,error)
             }
         }
+        onCancel()
     };
     return (
         <div>
@@ -50,7 +81,7 @@ const ModalForm = ({ visible, onCancel = () => { },
                     onFinish={onFinish}
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 17 }}
-                    initialValues={dataInit} 
+                    initialValues={dataInit}
                 >
                     <RenderForm
                         jsonFrom={addAccountForm}
@@ -71,7 +102,12 @@ const addAccountFormInit = [
     {
         name: 'type',
         label: 'Kiểu phòng',
-        rules: [{required : true ,message : "Không được bỏ trống"}],
+        rules: [{ required: true, message: "Không được bỏ trống" }],
+    },
+    {
+        name : 'name',
+        label : 'Tên phòng',
+        rules: [{ required: true, message: "Không được bỏ trống" }],
     },
     {
         name: 'priceUnit',
@@ -81,8 +117,8 @@ const addAccountFormInit = [
     {
         name: 'maximum',
         label: 'Số người tối đa',
-        rules: [{required : true ,message : "Không được bỏ trống"}],
-    },    
+        rules: [{ required: true, message: "Không được bỏ trống" }],
+    },
 ];
 
 export default ModalForm;

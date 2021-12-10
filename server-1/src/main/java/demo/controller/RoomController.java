@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.dto.RoomDTO;
@@ -23,6 +24,11 @@ public class RoomController {
 
 	@Autowired
 	private RoomService roomService;
+	
+	@GetMapping("/api/room/")
+	public ResponseEntity<ResponseObject> findByName(@RequestParam(name="name") String nameRoom){
+		return roomService.findByName(nameRoom);
+	}
 	
 	@GetMapping("/api/room")
 	public List<RoomDTO> getAll(){
@@ -39,6 +45,7 @@ public class RoomController {
 		return roomService.findById(id);
 	}
 	
+	
 	@PutMapping("/api/room")
 	public ResponseEntity<ResponseObject> update(@RequestBody RoomDTO roomDTO){
 		return roomService.update(roomDTO);
@@ -48,4 +55,5 @@ public class RoomController {
 	public ResponseEntity<ResponseObject> deleteById(@PathVariable long id){
 		return roomService.deleteById(id);
 	}
+	
 }
