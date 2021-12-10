@@ -1,29 +1,30 @@
-import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined } from '@ant-design/icons';
-import { Button, Modal, notification, Table } from 'antd';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { editStudent, getAllStudent } from '../service/account';
-import ModalForm from './Form/FormStudent/ModalForm';
+import { Table, Tag, Space, Tabs, Modal, Button, Alert,notification } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined,TwitterOutlined ,CheckOutlined} from '@ant-design/icons';
+import ModalForm from './Form/FormRooms/ModalForm';
+import { roomAPI, serviceAPI, visiterAPI } from '../fake-api/student-API';
+import { getAllVehicle } from '../service/account';
 
-const Student = (props) => {
+
+function Vehicle(props) {
+
 
     const [row, setRow] = useState(false);
     const [data, setData] = useState([])
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
     const _requestData = async () => {
-        const data = await getAllStudent()
-        // console.log("data2134", data)
-        const dataConvert = data.data.map(i => {
-            return i
-        })
-        setData(dataConvert)
+        const data = await roomAPI()
+		const vehicleData = await getAllVehicle();
+		console.log(vehicleData.data);
+        console.log("data", data)
+        setData(data)
     }
 
 
     useEffect(() => {
         _requestData()
-    }, [])
+    })
 
     const openNotification = () => {
         notification.open({
@@ -33,40 +34,16 @@ const Student = (props) => {
           icon: <CheckOutlined style={{ color: '#108ee9' }} />,
         });
       };
-      const editNotification = () => {
-        notification.open({
-          message: 'Chỉnh sửa thành công',
-          description:
-          <TwitterOutlined style={{color : '#93b874'}}/> ,
-          icon: <CheckOutlined style={{ color: '#108ee9' }} />,
-        });
-      };
     const _handleRow = (val) => {
-        console.log("row" ,val)
         setRow(val);
     }
-    const handleSelect = async (data, type) => {
+    const handleSelect =  (data, type) => {
         if (type == "edit") {
-            console.log("duc123")
             setRow(false);
             setModalForm({
                 data,
                 type
             })
-            try {
-             //   await axios.patch(`http://localhost:8080/api/student/${data.id}`)
-                await axios.put(`http://localhost:8080/api/student/${data}`, data)
-                const data = await editStudent();
-                const dataConvert = data.data.map(i => {
-                    return i
-                })
-                setData(dataConvert)
-                editNotification()  
-                _requestData();  
-                
-            } catch (error) {
-                console.log(error)
-            }
         }
         if(type == "add"){
             setRow(false)
@@ -74,28 +51,16 @@ const Student = (props) => {
                 data,
                 type
             })
-            try {
-                await axios.post('http://localhost:8080/api/student')
-                _requestData();
-            } catch (error) {
-                console.log("err" ,error)
-            }
         }
         if (type == "del") {
             setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
-                try {
-                    await axios.delete(`http://localhost:8080/api/student/${data.id}`)
-                    openNotification()  
-                    _requestData();  
-                } catch (error) {
-                    console.log(error)
-                }
-                
+                openNotification()
             }
         }
     }
+
     return (
         <div>
             <div>
@@ -162,37 +127,25 @@ const Student = (props) => {
 
 const columns = [
     {
-        title: 'Họ tên',
-        dataIndex: 'name',
-        key: 'name',
+        title : 'Đơn Giá',
+        dataIndex : 'priceUnit',
+        key : 'priceUnit'
     },
     {
-        title: 'Mã sinh viên',
-        dataIndex: 'studentCode',
-        key: 'studentCode',
-    }, 
-    {
-        title: 'Số chứng minh thư',
-        dataIndex: 'identificationNo',
-        key: 'identificationNo',
+        title : "Total" , 
+        dataIndex : 'total',
+        key : 'total'
     },
     {
-        title: 'Ngày sinh',
-        dataIndex: 'birthDate',
-        key: 'birthDate'
+        title : 'Số người tối đa',
+        dataIndex : 'maximum',
+        key : 'maximum'
     },
     {
-        title: 'Lớp',
-        dataIndex: 'grade',
-        key: 'grade'
-    },
-    {
-        title: 'Địa chỉ',
-        dataIndex: 'address',
-        key: 'address',
-    },
+		title : 'Số người tối đa',
+        dataIndex : 'maximum',
+        key : 'maximum'
+    }
+]
 
-];
-
-
-export default Student;
+export default Vehicle;

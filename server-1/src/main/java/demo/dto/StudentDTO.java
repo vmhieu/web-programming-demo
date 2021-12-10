@@ -54,7 +54,12 @@ public class StudentDTO extends AbstractDTO{
 	public void setRoomID(long roomID) {
 		this.roomID = roomID;
 	}
-
+//	public Object getRoomObject() {
+//		return roomObject;
+//	}
+//	public void setRoomObject(Object roomObject) {
+//		this.roomObject = roomObject;
+//	}
 	public Object getRoomObject1() {
 		return roomObject1;
 	}

@@ -32,8 +32,8 @@ public class StudentEntity extends BaseEntity{
 	@JoinColumn(name = "room_id")
 	private RoomEntity room;
 	
-//	@OneToMany(mappedBy="students_bill")
-//	private List<BillEntity> bill;
+	@OneToMany(mappedBy="studentEntity")
+	private List<BillEntity> bill;
 	
 	@OneToMany(mappedBy="studentID", cascade=CascadeType.ALL) // cascade=CascadeType.ALL có tác dụng đồng bộ 2 bảng với nhau với nhau bảng này bị xóa bảng kia cũng bị xóa
 	private List<GuestEntity> guest;
