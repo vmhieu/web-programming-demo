@@ -55,6 +55,7 @@ const ModalForm = ({ visible, onCancel = () => { },
                 await updateRooms({
                     id : visible.data.id || "",
                     type : values.type || "",
+                    name : values.name || " ",
                     priceUnit : values.priceUnit || "",
                     maximum : values.maximum || ""
                 })
