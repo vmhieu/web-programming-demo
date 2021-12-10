@@ -72,9 +72,9 @@ const Student = (props) => {
     }
     const { Search } = Input;
     const onSearch = async value => {
-        try {
             const res = await apiClient.get(`http://localhost:8080/api/student/?name=${value}`)
             console.log("res" ,res.data.message)
+            setData(res.data.data)
             try {
                 
                 notification.open({
@@ -83,7 +83,7 @@ const Student = (props) => {
                     <TwitterOutlined style={{color : '#93b874'}}/> ,
                     icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
                   })
-                  setData([res.data.data])
+                  
             } catch (error) {
                 notification.open({
                     message: error.response.data.message,
@@ -93,11 +93,6 @@ const Student = (props) => {
                     
                   })
             }
-            
-            
-        } catch (error) {
-            console.log("err ", error )
-        }
     };
 
     return (

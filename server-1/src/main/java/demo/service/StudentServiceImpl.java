@@ -151,7 +151,10 @@ public class StudentServiceImpl implements StudentService {
 		List<StudentEntity> studentEntities = studentRepository.findByName(name);
 		if(!studentEntities.isEmpty()) {
 			for (StudentEntity item : studentEntities) {
+				RoomEntity roomEntity = item.getRoom();
 				StudentDTO studentDTO = modelMapper.map(item, StudentDTO.class);
+				RoomDTO roomDTO = modelMapper.map(roomEntity, RoomDTO.class);
+				studentDTO.setRoomObject1(roomDTO);
 				results.add(studentDTO);
 			}
 			return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Thành công", results));
