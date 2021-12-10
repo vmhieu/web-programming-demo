@@ -13,6 +13,9 @@ import javax.persistence.Table;
 @Table(name = "room")
 public class RoomEntity extends BaseEntity{
 	
+	@Column(name = "name")
+	private String name;
+	
 	@Column(name = "type")
 	private String type;
 	
@@ -67,6 +70,14 @@ public class RoomEntity extends BaseEntity{
 
 	public void setTotal(int total) {
 		this.total = total;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getMaximum() {

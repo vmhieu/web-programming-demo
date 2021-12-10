@@ -24,6 +24,7 @@ export const deleteVehilce = (id) => apiClient.delete(`${ENDPOINTS.VEHICLE}/${id
 
 export const getAllRooms = (param) => apiClient.get(ENDPOINTS.ROOM ,param)
 export const addRooms = (body) => apiClient.post(ENDPOINTS.ROOM , body)
+export const updateRooms = (body) => apiClient.put(ENDPOINTS.ROOM , body)
 
 //login
 export const checkLogin = (body) => apiClient.post(ENDPOINTS.LOGIN , body)
