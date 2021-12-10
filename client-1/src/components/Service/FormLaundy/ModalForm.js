@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Tag, Space, Tabs, Modal, Button, Form, notification } from "antd";
 import { TwitterOutlined, CloseOutlined, CheckOutlined} from '@ant-design/icons';
 import RenderForm from "./RenderForm";
-import { addStudent, editStudent } from "../../../service/account";
+import { addLaundry, addStudent, editStudent } from "../../../service/account";
 import { apiClient } from "../../../service/apiClient";
 const ModalForm = ({ visible, onCancel = () => {} }) => {
   console.log("visible", visible);
@@ -25,7 +25,7 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
     console.log("Success:", values);
     if (visible.type == "add") {
       try {
-        const res = await addStudent(values);
+        const res = await addLaundry(values);
         notification.open({
           message: res.data.message,
           description:
@@ -45,7 +45,7 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
     }
     if (visible.type == "edit") {
         try {
-          const res = await apiClient.put(`https://ltweb-demo.azurewebsites.net/api/student/${visible.data.id}`, values);
+          const res = await apiClient.put(`https://ltweb-demo.azurewebsites.net/api/service/laundry${visible.data.id}`, values);
           notification.open({
             message: res.data.message,
             description:
@@ -116,40 +116,31 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
 const addAccountFormInit = [
   {
     name: "name",
-    label: "Họ tên",
+    label: "Tên dịch vụ",
     rules: [{ required: true, message: "Không được bỏ trống" }],
     // type: 'number'
   },
   {
-    name: "studentCode",
-    label: "Mã sinh viên",
+    name: "serviceCode",
+    label: "Mã dịch vụ",
     rules: [{ required: true, message: "Không được bỏ trống" }],
   },
   {
-    name: "identificationNo",
-    label: "Số CMT",
+    name: "priceUnit",
+    label: "Đơn giá",
     rules: [{ required: true, message: "Không được bỏ trống" }],
   },
   {
-    name: "birthDate",
-    label: "Ngày sinh",
+    name: "weight",
+    label: "Số cân",
     rules: [{ required: true, message: "Không được bỏ trống" }],
   },
   {
-    name: "grade",
-    label: "Lớp",
+    name: "studentId",
+    label: "ID Sinh viên",
     rules: [{ required: true, message: "Không được bỏ trống" }],
   },
-  {
-    name: "address",
-    label: "Địa chỉ",
-    rules: [{ required: true, message: "Không được bỏ trống" }],
-  },
-  {
-    name: "roomID",
-    label: "Mã phòng",
-    rules: [{ required: true, message: "Không được bỏ trống" }],
-  },
+
 ];
 
 export default ModalForm;

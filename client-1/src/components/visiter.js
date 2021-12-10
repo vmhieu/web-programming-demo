@@ -129,6 +129,7 @@ function Visiter(props) {
                 onCancel={() => {
                     console.log("asdada")
                     setModalForm(false)
+                    _requestData()
                 }}
             />
 

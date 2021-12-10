@@ -211,7 +211,7 @@ const columns = [
     },
     {
         title: 'Tên phòng',
-        dataIndex: ["roomObject1", "name"],
+        dataIndex: ['roomObject1', 'name'],
         key: 'name',
     },
 

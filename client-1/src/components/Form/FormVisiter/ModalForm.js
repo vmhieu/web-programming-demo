@@ -65,7 +65,7 @@ const ModalForm = ({ visible, onCancel = () => { },
                   })
             }
         }
-        onCancel();
+        onCancel()
     };
     return (
         <div>
@@ -104,22 +104,22 @@ const ModalForm = ({ visible, onCancel = () => { },
 const addAccountFormInit = [
     {
         name: 'name',
-        label: 'Name',
+        label: 'Họ tên',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
         name: 'birthDate',
-        label: 'BirthDate',
+        label: 'Ngày sinh',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
         name: 'identificationNo',
-        label: 'CMT',
+        label: 'Số CMT',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
         name: 'studentID',
-        label: 'StudentID',
+        label: 'ID sinh viên',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     
