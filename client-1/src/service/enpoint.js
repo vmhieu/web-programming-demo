@@ -7,5 +7,5 @@ export const ENDPOINTS = {
         GUEST : '/api/guest',
         LOGIN : '/api/admin',
         VEHICLE: '/api/vehicle',
-        BILL: 'api/bill-service'
+        BILL: 'api/bill'
 };

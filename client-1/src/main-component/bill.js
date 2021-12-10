@@ -6,8 +6,8 @@ import "./bill.css";
 import { getBillByStudentId } from "../service/account";
 import { notification } from "antd";
 import moment from "moment";
-import { TwitterOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
+import { TwitterOutlined, CloseOutlined, LoadingOutlined, LeftCircleOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
 
 const Bill = (props) => {
   const navigate = useNavigate();
@@ -93,6 +93,11 @@ const Bill = (props) => {
   return (
     <div className="container pt-5">
       <div className="columns is-centered">
+        <Link to="/home">
+          <div className="mt-5 mr-3">
+            <LeftCircleOutlined style={{ fontSize: 50, color: "orange" }} />
+          </div>
+        </Link>
         <div className="column is-half">
           <div className="card">
             <div className="card-content" style={{ backgroundColor: "#f3ede3"}}>
