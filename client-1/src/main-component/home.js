@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from '@ant-design/icons';
 import { login } from '../store/reducer';
+import Vehicle from "../components/vehicle";
 
 const Home = () => {
     const { TabPane } = Tabs;
@@ -55,6 +56,9 @@ const Home = () => {
                                 <Laundry />
                             </TabPane>
                         </Tabs>
+                    </TabPane>
+                    <TabPane tab="Quản lý xe" key="5">
+                        <Vehicle />
                     </TabPane>
                 </Tabs>
             </div>

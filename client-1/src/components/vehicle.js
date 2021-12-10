@@ -1,30 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Alert,notification } from 'antd';
+import { Table, Modal, Button, notification } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined,TwitterOutlined ,CheckOutlined} from '@ant-design/icons';
-import ModalForm from './Form/FormRooms/ModalForm';
-import { roomAPI, serviceAPI, visiterAPI } from '../fake-api/student-API';
-import { getAllVehicle } from '../service/account';
-
+import ModalForm from './Form/VehicleForm/ModalForm';
+import { getAllVehicles, updateVehicle, addVehicle, deleteVehilce } from '../service/account';
 
 function Vehicle(props) {
-
-
     const [row, setRow] = useState(false);
     const [data, setData] = useState([])
     const [option, setOption] = useState(null)
     const [modalForm, setModalForm] = useState(false)
     const _requestData = async () => {
-        const data = await roomAPI()
-		const vehicleData = await getAllVehicle();
-		console.log(vehicleData.data);
-        console.log("data", data)
-        setData(data)
+		const vehicleData = await getAllVehicles();
+        setData(vehicleData.data);
     }
 
-
     useEffect(() => {
-        _requestData()
-    })
+        _requestData();
+    }, []);
 
     const openNotification = () => {
         notification.open({
@@ -37,27 +29,30 @@ function Vehicle(props) {
     const _handleRow = (val) => {
         setRow(val);
     }
-    const handleSelect =  (data, type) => {
+    const handleSelect = async (data, type) => {
         if (type == "edit") {
             setRow(false);
             setModalForm({
                 data,
-                type
+                type,
+                action: updateVehicle
             })
         }
         if(type == "add"){
             setRow(false)
             setModalForm({
                 data,
-                type
+                type,
+                action: addVehicle
             })
         }
         if (type == "del") {
-            setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
+                await deleteVehilce(row.id)
                 openNotification()
             }
+            setRow(false)
         }
     }
 
@@ -119,6 +114,7 @@ function Vehicle(props) {
                     console.log("asdada")
                     setModalForm(false)
                 }}
+                jsonInit={jsonInit}
             />
 
         </div>
@@ -127,25 +123,51 @@ function Vehicle(props) {
 
 const columns = [
     {
-        title : 'Đơn Giá',
-        dataIndex : 'priceUnit',
-        key : 'priceUnit'
+        title : "STT",
+        key : "index",
+        render: (text, record, index) => index + 1
     },
     {
-        title : "Total" , 
-        dataIndex : 'total',
-        key : 'total'
+        title : "Tên" , 
+        dataIndex : ["studentObject", "name"],
+        key : "name",
+        render: text => text
     },
     {
-        title : 'Số người tối đa',
-        dataIndex : 'maximum',
-        key : 'maximum'
+        title : "Mã sinh viên",
+        dataIndex : ["studentObject", "studentCode"],
+        key : "studentCode",
+        render: text => text
     },
     {
-		title : 'Số người tối đa',
-        dataIndex : 'maximum',
-        key : 'maximum'
+		title : "Biển số xe",
+        dataIndex : "numberPlate",
+        key : "numberPlate"
+    },
+    {
+        title : "Trạng thái",
+        dataIndex : "hasTicket",
+        key : "hasTicket",
+        render: text => text ? "Đã đăng ký" : "Chưa đăng ký"
     }
 ]
+
+const jsonInit = [
+    {
+        name: 'numberPlate',
+        label: 'Biển số xe',
+        rules: [{required : true, message : "Không được bỏ trống"}],
+    },
+    {
+        name: 'hasTicket',
+        label: 'Trạng thái',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
+    },
+    {
+        name: 'studentId',
+        label: 'Sinh viên',
+        rules: [{ required: true, message: 'Không được bỏ trống' }],
+    }
+];
 
 export default Vehicle;
