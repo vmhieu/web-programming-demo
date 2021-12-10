@@ -1,8 +1,13 @@
 import { useParams } from "react-router";
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./bill.css";
+import { getBillByStudentId } from "../service/account";
+import { notification } from "antd";
+import moment from "moment";
+import { TwitterOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 const Bill = (props) => {
   const navigate = useNavigate();
@@ -16,15 +21,73 @@ const Bill = (props) => {
   // }, []);
   
   const { id } = useParams();
-  const data = {
-    '2021-12-08': [ { name: 'Gửi xe-HD981(FREE)', price: 0 } ],
-    '2021-12-09': [
-      { name: 'Gửi xe-HD981', price: 3000 },
-      { name: 'Gửi xe-HD981', price: 3000 },
-      { name: 'Gửi xe-HD981', price: 3000 },
-      { name: 'Đồ ăn-HD981(x2)', price: 3000 },
-      { name: 'Giặt là-HD981(2kg)', price: 3000 }
-    ]
+  const [data, setData] = useState([]);
+  const [values, setValues] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      try {
+        const res = await getBillByStudentId(id);
+        const data = formatData(res.data.bill);
+        setData(data);
+        setValues(res.data);
+        setLoading(false);
+      } catch (error) {
+        notification.open({
+          message: error.response.data.message,
+          description:
+          <TwitterOutlined style={{color : '#93b874'}}/> ,
+          icon: <CloseOutlined style={{ color: '#e80404' }} />,
+      });
+      }
+    };
+    fetchAPI();
+  }, []);
+
+  const formatData = (data) => {
+    let uniqueDay = [];
+    for (const item of data) {
+      const day = moment(item.createdDate).format("DD-MM-YYYY");
+      if (!uniqueDay.includes(day)) {
+        uniqueDay.push(day);
+      }
+    }
+    uniqueDay = uniqueDay.sort();
+    let result = {};
+    for (const day of uniqueDay) {
+      result[day] = [];
+    }
+    for (const item of data) {
+      const currDay = moment(item.createdDate).format("DD-MM-YYYY");
+      for (const day of uniqueDay) {
+        if (day === currDay) {
+          let name = "";
+          const price = item.object.price;
+          if (item.type === "ParkingEntity") {
+            name = "Gửi xe-" + item.object.serviceCode + (price ? "" : " (FREE)");
+          } else if (item.type === "FoodEntity") {
+            name = `Đồ ăn-${item.object.serviceCode} (x${item.object.times})`;
+          } else if (item.type === "LaundryEntity") {
+            name = `Giặt là-${item.object.serviceCode} (${item.object.weight}kg)`
+          }
+          result[day].push({
+            name,
+            price
+          });
+        }
+      }
+    }
+    return result;
+  }
+
+
+  if (loading) {
+    return (
+      <div className="loading-center">
+        <LoadingOutlined style={{ fontSize: 50, color: "orange" }} spin />
+      </div>
+    );
   }
 
   return (
@@ -32,11 +95,10 @@ const Bill = (props) => {
       <div className="columns is-centered">
         <div className="column is-half">
           <div className="card">
-            <div className="card-content">
-              <h1 className="title is-4 has-text-centered">HÓA ĐƠN THÁNG 12/2021 </h1>
-              <p>Họ và tên: Trịnh Vũ Đức</p>
-              <p>Mã SV: B18DCCN100</p>
-              <p>Tiền dịch vụ:</p>
+            <div className="card-content" style={{ backgroundColor: "#f3ede3"}}>
+              <h1 className="title is-4 has-text-centered">HÓA ĐƠN THÁNG {values.month}/{values.year} </h1>
+              <p>Họ và tên: {values.name}</p>
+              <p>Mã SV: {values.studentCode}</p>
               <hr className="divider" />
               <div className="columns">
                 <div className="column">
@@ -80,7 +142,7 @@ const Bill = (props) => {
                   <span>Tiền phòng</span>
                 </div>
                 <div className="column has-text-right">
-                  <span>650.000</span>
+                  <span>{values.roomFee}</span>
                 </div>
               </div>
               <div className="columns">
@@ -89,7 +151,7 @@ const Bill = (props) => {
                   <span>Tiền gửi xe vé tháng</span>
                 </div>
                 <div className="column has-text-right">
-                  <span>100.000</span>
+                  <span>{values.ticketFee}</span>
                 </div>
               </div>
               <hr className="divider" />
@@ -99,7 +161,7 @@ const Bill = (props) => {
                   <span className="title is-6">Tổng cộng</span>
                 </div>
                 <div className="column has-text-right">
-                  <span className="title is-6">650.000</span>
+                  <span className="title is-6">{values.totalPrice}</span>
                 </div>
               </div>
             </div>
