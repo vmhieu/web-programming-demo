@@ -1,7 +1,8 @@
-import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CloseOutlined } from '@ant-design/icons';
+import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CloseOutlined,ReadOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, notification, Space, Table } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { editStudent, getAllStudent } from '../service/account';
 import { apiClient } from '../service/apiClient';
 import ModalForm from './Form/FormStudent/ModalForm';
@@ -20,7 +21,7 @@ const Student = (props) => {
         })
         setData(dataConvert)
     }
-
+    const navigation = useNavigate()
 
     useEffect(() => {
         _requestData()
@@ -69,6 +70,10 @@ const Student = (props) => {
 
             }
         }
+        if(type == "bill"){
+            setRow(false)
+            navigation(`/bill/${data.id}`)
+        }
     }
     const { Search } = Input;
     const onSearch = async value => {
@@ -112,9 +117,9 @@ const Student = (props) => {
                 <div style={{ marginRight: '50px' }}>
                     <Space>
                         <Search
-                            placeholder="input search text"
+                            placeholder="Tìm kiếm..."
                             allowClear
-                            enterButton="Search"
+                            enterButton="Tìm kiếm"
                             size="large"
                             onSearch={onSearch}
                         />
@@ -158,6 +163,14 @@ const Student = (props) => {
                         >
                             <DeleteOutlined />
                             Xóa
+                        </Button>
+                        <Button
+                            style={{ display: "flex", alignItems: "center", width: '150px', height: '60px', borderRadius: '10px', backgroundColor: "#616161" }}
+                            onClick={() => handleSelect(row, "bill")}
+                            type="danger"
+                        >
+                            <ReadOutlined /> 
+                            Xem hóa đơn
                         </Button>
                     </div>
                 </Modal>
