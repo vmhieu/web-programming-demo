@@ -40,6 +40,7 @@ public class LaundryServiceImpl implements LaundryService {
 			} else {
 				laundryEntity.setStudentEntity(studentEntity.get());
 				laundryEntity.setWeight(dto.getWeight());
+				laundryEntity.setPrice(dto.getPriceUnit() * dto.getWeight());
 				laundryRepository.save(laundryEntity);
 			}
 			return ResponseEntity.ok(new ResponseObject("ok", "Thêm lần giặt là thành công", ""));
@@ -59,6 +60,7 @@ public class LaundryServiceImpl implements LaundryService {
                 }
                 laundryEntityUpdate.setPrice(dto.getPrice());
                 laundryEntityUpdate.setWeight(dto.getWeight());
+				laundryEntityUpdate.setPrice(dto.getPriceUnit() * dto.getWeight());
 //                }
 				LaundryEntity laundryResponse = laundryRepository.save(laundryEntityUpdate);
                 LaundryDTO responseDto = modelMapper.map(laundryResponse, LaundryDTO.class);

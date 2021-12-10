@@ -1,6 +1,8 @@
 package demo.service;
 
 import demo.dto.BillDTO;
+import demo.dto.FoodDTO;
+import demo.dto.LaundryDTO;
 import demo.dto.ParkingDTO;
 import demo.entity.*;
 import demo.repository.*;
@@ -42,6 +44,15 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private ParkingRepository parkingRepository;
 
+    @Autowired
+    private FoodRepository foodRepository;
+
+    @Autowired
+    private LaundryRepository laundryRepository;
+
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
     @Override
     public ResponseEntity<?> getBillByStudentId(long studentId) {
         try {
@@ -55,22 +66,38 @@ public class BillServiceImpl implements BillService {
                 List<ServiceEntity> serviceEntities = serviceRepository.findByStudentEntityAndCreatedDateBetween(studentEntity.get(), firstDateWithoutTime, lastDateWithoutTime);
                 // Get service for a month
                 RoomEntity roomEntity = roomRepository.findByStudentRoom(studentEntity.get());
+                VehicleEntity vehicleEntity = vehicleRepository.findByStudentEntity(studentEntity.get());
                 float totalPrice = roomEntity.getPriceUnit();
+                if (vehicleEntity.isHasTicket()) {
+                    totalPrice += 100000;
+                }
                 for (ServiceEntity item : serviceEntities) {
                     totalPrice += item.getPrice();
                     System.out.println(item.getId());
                     BillDTO billDTO = new BillDTO();
                     String[] type = item.getClass().getName().split("\\.");
                     billDTO.setType(type[2]);
+                    billDTO.setCreatedDate(item.getCreatedDate());
                     if (type[2].equals("ParkingEntity")) {
                         Optional<ParkingEntity> parkingEntity = parkingRepository.findById(item.getId());
                         if (parkingEntity.isPresent()) {
                             ParkingDTO parkingDTO = modelMapper.map(parkingEntity.get(), ParkingDTO.class);
                             billDTO.setObject(parkingDTO);
-                            result.add(billDTO);
+                        }
+                    } else if (type[2].equals("FoodEntity")) {
+                        Optional<FoodEntity> foodEntity = foodRepository.findById(item.getId());
+                        if (foodEntity.isPresent()) {
+                            FoodDTO foodDTO = modelMapper.map(foodEntity.get(), FoodDTO.class);
+                            billDTO.setObject(foodDTO);
+                        }
+                    } else if (type[2].equals("LaundryEntity")) {
+                        Optional<LaundryEntity> laundryEntity = laundryRepository.findById(item.getId());
+                        if (laundryEntity.isPresent()) {
+                            LaundryDTO laundryDTO = modelMapper.map(laundryEntity.get(), LaundryDTO.class);
+                            billDTO.setObject(laundryDTO);
                         }
                     }
-                    // Thieu 2 dich vu
+                    result.add(billDTO);
                 }
                 // Save bill
                 int month = LocalDate.now().getMonthValue();

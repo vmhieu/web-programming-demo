@@ -40,6 +40,7 @@ public class FoodServiceImpl implements FoodService {
 			} else {
 				foodEntity.setStudentEntity(studentEntity.get());
 				foodEntity.setTimes(dto.getTimes());
+				foodEntity.setPrice(dto.getPriceUnit() * (float) dto.times);
 				foodRepository.save(foodEntity);
 			}
 			return ResponseEntity.ok(new ResponseObject("ok", "Thêm lần ăn thành công", ""));
@@ -57,7 +58,7 @@ public class FoodServiceImpl implements FoodService {
                 if (dto.getName() != null) {
                     foodEntityUpdate.setName(dto.getName());
                 }
-                foodEntityUpdate.setPrice(dto.getPrice());
+                foodEntityUpdate.setPrice(dto.getPriceUnit() * (float) dto.getTimes());
                 foodEntityUpdate.setTimes(dto.getTimes());
 //                }
 				FoodEntity foodResponse = foodRepository.save(foodEntityUpdate);
