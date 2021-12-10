@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
 import RenderForm from './RenderForm';
-import {addStudent} from '../../../service/account'
+import {addGuest, addStudent} from '../../../service/account'
+import { apiClient } from '../../../service/apiClient';
 const ModalForm = ({ visible, onCancel = () => { },
 }) => {
     console.log('visible' ,visible)
@@ -22,16 +23,29 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 
     const onFinish = async(values) => {
-        onCancel()
         console.log('Success:', values);
         if(visible.type == "add") {
+            
             try {
-                const res = await addStudent()
+                const res = await addGuest(values)
+                // if(Response.message === "Số người trong phòng đã tối đa"){
+                //     window.alert("Số người trong phòng đã tối đa")
+                // }
                 console.log("res" ,res)
             } catch (error) {
                 console.log("err" ,error)
             }
         }
+
+        if(visible.type == "edit") {
+            try {
+                const res = await apiClient.put(`http://localhost:8080/api/guest/${visible.data.id}`, values)
+                console.log("res" ,res)
+            } catch (error) {
+                console.log("err" ,error)
+            }
+        }
+        onCancel();
     };
     return (
         <div>
@@ -69,28 +83,28 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 const addAccountFormInit = [
     {
-        name: 'Họ tên',
+        name: 'name',
         label: 'Name',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
         // type: 'number'
     },
     {
-        name: 'Ngày sinh',
+        name: 'birthDate',
         label: 'BirthDate',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
+    // {
+    //     name: 'Ngày đến',
+    //     label: 'Date',
+    //     rules: [{required : true ,message : "Không được bỏ trống"}],
+    // },
     {
-        name: 'Ngày đến',
-        label: 'Date',
-        rules: [{required : true ,message : "Không được bỏ trống"}],
-    },
-    {
-        name: 'Số chứng minh thư',
+        name: 'identificationNo',
         label: 'CMT',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
-        name: 'ID Sinh viên',
+        name: 'studentID',
         label: 'StudentID',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },

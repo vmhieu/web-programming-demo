@@ -60,7 +60,10 @@ public class GuestServiceImpl implements GuestService {
 		Optional<GuestEntity> guestDb = this.guestRepository.findById(guest.getId());
 		if (guestDb.isPresent()) {
 			GuestEntity guestUpdate = guestDb.get();
+			
 			guestUpdate = modelMapper.map(guest, GuestEntity.class);
+			guestUpdate.setCreatedDate(guestDb.get().getCreatedDate());
+			//guestUpdate.setCreatedDate(guest.getCreatedDate());
 			guestRepository.save(guestUpdate);
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Cập nhật thành công", guest));
 		} else {

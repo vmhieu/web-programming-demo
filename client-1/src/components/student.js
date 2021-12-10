@@ -53,14 +53,6 @@ const Student = (props) => {
                 data,
                 type
             })
-            try {
-                await axios.put(`http://localhost:8080/api/student/${data}`, data)
-                editNotification()  
-                _requestData();  
-                
-            } catch (error) {
-                console.log(error)
-            }
         }
         if(type == "add"){
             setRow(false)
@@ -68,12 +60,6 @@ const Student = (props) => {
                 data,
                 type
             })
-            try {
-                await axios.post('http://localhost:8080/api/student')
-                _requestData();
-            } catch (error) {
-                console.log("err" ,error)
-            }
         }
         if (type == "del") {
             setRow(false)
@@ -147,6 +133,7 @@ const Student = (props) => {
                 onCancel={() => {
                     console.log("asdada")
                     setModalForm(false)
+                    _requestData()
                 }}
             />
 

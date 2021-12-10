@@ -109,7 +109,7 @@ public class StudentServiceImpl implements StudentService {
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Thành công", studentDTO));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ResponseObject("failed", "Không tìm thấy sinh viên", ""));
+					.body(new ResponseObject("failed", "Không tìm thấy sinh viên"));
 		}
 	}
 
