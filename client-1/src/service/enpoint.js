@@ -1,5 +1,5 @@
-//export const BASE_URL = 'https://ltweb-demo.azurewebsites.net';
-export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL = 'https://ltweb-demo.azurewebsites.net';
+// export const BASE_URL = 'http://localhost:8080';
 
 export const ENDPOINTS = {
         STUDENT : '/api/student',
@@ -7,5 +7,5 @@ export const ENDPOINTS = {
         GUEST : '/api/guest',
         LOGIN : '/api/admin',
         VEHICLE: '/api/vehicle',
-        BILL: 'api/bill-service'
+        BILL: 'api/bill'
 };

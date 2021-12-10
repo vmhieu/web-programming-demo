@@ -28,15 +28,15 @@ const Student = (props) => {
 
     const openNotification = () => {
         notification.open({
-          message: 'Xóa thành công',
-          description:
-          <TwitterOutlined style={{color : '#93b874'}}/> ,
-          icon: <CheckOutlined style={{ color: '#108ee9' }} />,
+            message: 'Xóa thành công',
+            description:
+                <TwitterOutlined style={{ color: '#93b874' }} />,
+            icon: <CheckOutlined style={{ color: '#108ee9' }} />,
         });
-      };
-      
+    };
+
     const _handleRow = (val) => {
-        console.log("row" ,val)
+        console.log("row", val)
         setRow(val);
     }
     const handleSelect = async (data, type) => {
@@ -48,7 +48,7 @@ const Student = (props) => {
                 type
             })
         }
-        if(type == "add"){
+        if (type == "add") {
             setRow(false)
             setModalForm({
                 data,
@@ -58,21 +58,21 @@ const Student = (props) => {
         if (type == "del") {
             setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
-            if(r == true) {
+            if (r == true) {
                 try {
-                    await axios.delete(`http://localhost:8080/api/student/${data.id}`)
-                    openNotification()  
-                    _requestData();  
+                    await axios.delete(`https://ltweb-demo.azurewebsites.net/api/student/${data.id}`)
+                    openNotification()
+                    _requestData();
                 } catch (error) {
                     console.log(error)
                 }
-                
+
             }
         }
     }
     const { Search } = Input;
     const onSearch = async value => {
-            const res = await apiClient.get(`http://localhost:8080/api/student/?name=${value}`)
+            const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
             console.log("res" ,res.data.message)
             setData(res.data.data)
             try {
@@ -97,28 +97,28 @@ const Student = (props) => {
 
     return (
         <div>
-            <div style={{display : 'flex' , justifyContent : 'space-between'}}>
-            <div>
-                <Button onClick={() => {
-                    handleSelect("" , "add")
-                }} style={{ margin: "0  0  15px 30px", borderRadius: "15px" }} icon={<PlusOutlined />}>Thêm mới</Button>
-                <Button onClick={() => {
-                    setData(false)
-                    _requestData()
-                }} style={{ margin: "0  0  15px 5px", borderRadius: "15px" }} icon={<ReloadOutlined />}>Làm mới</Button>
-            </div>
-            <div style={{marginRight : '50px'}}>
-                        <Space>
-                            <Search
-                                placeholder="input search text"
-                                allowClear
-                                enterButton="Search"
-                                size="large"
-                                onSearch={onSearch}
-                            />
-                        </Space>
-                    </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div>
+                    <Button onClick={() => {
+                        handleSelect("", "add")
+                    }} style={{ margin: "0  0  15px 30px", borderRadius: "15px" }} icon={<PlusOutlined />}>Thêm mới</Button>
+                    <Button onClick={() => {
+                        setData(false)
+                        _requestData()
+                    }} style={{ margin: "0  0  15px 5px", borderRadius: "15px" }} icon={<ReloadOutlined />}>Làm mới</Button>
                 </div>
+                <div style={{ marginRight: '50px' }}>
+                    <Space>
+                        <Search
+                            placeholder="input search text"
+                            allowClear
+                            enterButton="Search"
+                            size="large"
+                            onSearch={onSearch}
+                        />
+                    </Space>
+                </div>
+            </div>
             <Table
                 columns={columns}
                 dataSource={data}
@@ -175,8 +175,8 @@ const Student = (props) => {
 
 const columns = [
     {
-        title : "STT",
-        key : "index",
+        title: "STT",
+        key: "index",
         render: (text, record, index) => index + 1
     },
     {
@@ -188,7 +188,7 @@ const columns = [
         title: 'Mã sinh viên',
         dataIndex: 'studentCode',
         key: 'studentCode',
-    }, 
+    },
     {
         title: 'Số chứng minh thư',
         dataIndex: 'identificationNo',
@@ -210,9 +210,9 @@ const columns = [
         key: 'address',
     },
     {
-        title : 'Tên phòng',
-        dataIndex : ["roomObject1", "name"],
-        key : 'name',
+        title: 'Tên phòng',
+        dataIndex: ["roomObject1", "name"],
+        key: 'name',
     },
 
 ];
