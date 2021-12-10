@@ -15,7 +15,7 @@ function Vehicle(props) {
     }
 
     useEffect(() => {
-        _requestData()
+        _requestData();
     }, []);
 
     const openNotification = () => {

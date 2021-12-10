@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
+import {  Modal, Button, Form, notification } from 'antd';
+import { TwitterOutlined, CloseOutlined, CheckOutlined} from '@ant-design/icons';
 import RenderForm from './RenderForm';
 const ModalForm = ({ visible, onCancel = () => { }, jsonInit
 }) => {
-    console.log(visible);
-    console.log(jsonInit);
     const [form] = Form.useForm();
     const [dataInit, setDataInit] = useState({});
 
@@ -23,21 +22,40 @@ const ModalForm = ({ visible, onCancel = () => { }, jsonInit
 
     const onFinish = async(values) => {
         onCancel()
-        console.log('Success:', values);
         if(visible.type == "add") {
             try {
                 const res = await visible.action(values);
-                console.log("res" ,res)
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,
+                });
             } catch (error) {
-                console.log("err" ,error)
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,
+                });
             }
         }
         if(visible.type == "edit") {
             try {
                 const res = await visible.action(visible.data.id, values);
-                console.log("res" ,res)
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,
+                });
             } catch (error) {
-                console.log("err" ,error)
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,
+                });
             }
         }
     };
@@ -74,23 +92,5 @@ const ModalForm = ({ visible, onCancel = () => { }, jsonInit
         </div>
     );
 }
-
-const addAccountFormInit = [
-    {
-        name: 'type',
-        label: 'Kiểu phòng',
-        rules: [{required : true ,message : "Không được bỏ trống"}],
-    },
-    {
-        name: 'priceUnit',
-        label: 'Đơn giá',
-        rules: [{ required: true, message: 'Không được bỏ trống' }],
-    },
-    {
-        name: 'maximum',
-        label: 'Số người tối đa',
-        rules: [{required : true ,message : "Không được bỏ trống"}],
-    },    
-];
 
 export default ModalForm;
