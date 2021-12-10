@@ -2,6 +2,7 @@ package demo.service;
 
 import demo.dto.BillDTO;
 import demo.dto.FoodDTO;
+import demo.dto.InvoiceDTO;
 import demo.dto.LaundryDTO;
 import demo.dto.ParkingDTO;
 import demo.entity.*;
@@ -25,6 +26,8 @@ import java.util.Optional;
  **/
 @Service
 public class BillServiceImpl implements BillService {
+
+    private final float TICKET_FEE = 100000;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -69,7 +72,7 @@ public class BillServiceImpl implements BillService {
                 VehicleEntity vehicleEntity = vehicleRepository.findByStudentEntity(studentEntity.get());
                 float totalPrice = roomEntity.getPriceUnit();
                 if (vehicleEntity.isHasTicket()) {
-                    totalPrice += 100000;
+                    totalPrice += TICKET_FEE;
                 }
                 for (ServiceEntity item : serviceEntities) {
                     totalPrice += item.getPrice();
@@ -114,7 +117,18 @@ public class BillServiceImpl implements BillService {
                     newBillEntity.setStudentEntity(studentEntity.get());
                     billRepository.save(newBillEntity);
                 }
-                return ResponseEntity.ok(result);
+                InvoiceDTO responseDto = new InvoiceDTO();
+                responseDto.setMonth(month);
+                responseDto.setYear(year);
+                responseDto.setName(studentEntity.get().getName());
+                responseDto.setStudentCode(studentEntity.get().getStudentCode());
+                responseDto.setRoomFee(roomEntity.getPriceUnit());
+                if (vehicleEntity.isHasTicket()) {
+                    responseDto.setTicketFee(TICKET_FEE);
+                }
+                responseDto.setBill(result);
+
+                return ResponseEntity.ok(responseDto);
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseObject("fail", "Fail"));
