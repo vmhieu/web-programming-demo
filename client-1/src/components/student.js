@@ -1,8 +1,9 @@
-import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined } from '@ant-design/icons';
-import { Button, Modal, notification, Table } from 'antd';
+import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Input, Modal, notification, Space, Table } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { editStudent, getAllStudent } from '../service/account';
+import { apiClient } from '../service/apiClient';
 import ModalForm from './Form/FormStudent/ModalForm';
 
 const Student = (props) => {
@@ -33,14 +34,7 @@ const Student = (props) => {
           icon: <CheckOutlined style={{ color: '#108ee9' }} />,
         });
       };
-      const editNotification = () => {
-        notification.open({
-          message: 'Chỉnh sửa thành công',
-          description:
-          <TwitterOutlined style={{color : '#93b874'}}/> ,
-          icon: <CheckOutlined style={{ color: '#108ee9' }} />,
-        });
-      };
+      
     const _handleRow = (val) => {
         console.log("row" ,val)
         setRow(val);
@@ -53,14 +47,6 @@ const Student = (props) => {
                 data,
                 type
             })
-            try {
-                await axios.put(`http://localhost:8080/api/student/${data}`, data)
-                editNotification()  
-                _requestData();  
-                
-            } catch (error) {
-                console.log(error)
-            }
         }
         if(type == "add"){
             setRow(false)
@@ -68,12 +54,6 @@ const Student = (props) => {
                 data,
                 type
             })
-            try {
-                await axios.post('http://localhost:8080/api/student')
-                _requestData();
-            } catch (error) {
-                console.log("err" ,error)
-            }
         }
         if (type == "del") {
             setRow(false)
@@ -90,8 +70,39 @@ const Student = (props) => {
             }
         }
     }
+    const { Search } = Input;
+    const onSearch = async value => {
+        try {
+            const res = await apiClient.get(`http://localhost:8080/api/student/?name=${value}`)
+            console.log("res" ,res.data.message)
+            try {
+                
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                  })
+                  setData([res.data.data])
+            } catch (error) {
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,
+                    
+                  })
+            }
+            
+            
+        } catch (error) {
+            console.log("err ", error )
+        }
+    };
+
     return (
         <div>
+            <div style={{display : 'flex' , justifyContent : 'space-between'}}>
             <div>
                 <Button onClick={() => {
                     handleSelect("" , "add")
@@ -101,6 +112,18 @@ const Student = (props) => {
                     _requestData()
                 }} style={{ margin: "0  0  15px 5px", borderRadius: "15px" }} icon={<ReloadOutlined />}>Làm mới</Button>
             </div>
+            <div style={{marginRight : '50px'}}>
+                        <Space>
+                            <Search
+                                placeholder="input search text"
+                                allowClear
+                                enterButton="Search"
+                                size="large"
+                                onSearch={onSearch}
+                            />
+                        </Space>
+                    </div>
+                </div>
             <Table
                 columns={columns}
                 dataSource={data}
@@ -147,6 +170,7 @@ const Student = (props) => {
                 onCancel={() => {
                     console.log("asdada")
                     setModalForm(false)
+                    _requestData()
                 }}
             />
 
@@ -155,6 +179,11 @@ const Student = (props) => {
 }
 
 const columns = [
+    {
+        title : "STT",
+        key : "index",
+        render: (text, record, index) => index + 1
+    },
     {
         title: 'Họ tên',
         dataIndex: 'name',
@@ -184,6 +213,11 @@ const columns = [
         title: 'Địa chỉ',
         dataIndex: 'address',
         key: 'address',
+    },
+    {
+        title : 'Tên phòng',
+        dataIndex : ["roomObject1", "name"],
+        key : 'name',
     },
 
 ];

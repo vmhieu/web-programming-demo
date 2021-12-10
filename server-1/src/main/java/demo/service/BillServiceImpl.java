@@ -117,6 +117,7 @@ public class BillServiceImpl implements BillService {
                     newBillEntity.setStudentEntity(studentEntity.get());
                     billRepository.save(newBillEntity);
                 }
+                // response
                 InvoiceDTO responseDto = new InvoiceDTO();
                 responseDto.setMonth(month);
                 responseDto.setYear(year);
@@ -126,6 +127,7 @@ public class BillServiceImpl implements BillService {
                 if (vehicleEntity.isHasTicket()) {
                     responseDto.setTicketFee(TICKET_FEE);
                 }
+                responseDto.setTotalPrice(totalPrice);
                 responseDto.setBill(result);
 
                 return ResponseEntity.ok(responseDto);

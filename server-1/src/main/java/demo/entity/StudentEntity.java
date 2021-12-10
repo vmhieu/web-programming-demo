@@ -28,7 +28,7 @@ public class StudentEntity extends BaseEntity{
 	@Column(name = "address")
 	private String address;
 	
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "room_id")
 	private RoomEntity room;
 	

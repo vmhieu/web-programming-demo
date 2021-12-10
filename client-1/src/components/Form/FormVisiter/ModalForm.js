@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
+import { Table, Tag, Space, Tabs, Modal, Button, Form, notification } from 'antd';
 import RenderForm from './RenderForm';
-import {addStudent} from '../../../service/account'
+import { TwitterOutlined, CloseOutlined, CheckOutlined} from '@ant-design/icons';
+import {addGuest, addStudent} from '../../../service/account'
+import { apiClient } from '../../../service/apiClient';
 const ModalForm = ({ visible, onCancel = () => { },
 }) => {
     console.log('visible' ,visible)
@@ -22,16 +24,48 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 
     const onFinish = async(values) => {
-        onCancel()
         console.log('Success:', values);
         if(visible.type == "add") {
+            
             try {
-                const res = await addStudent()
-                console.log("res" ,res)
+                const res = await addGuest(values)
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                  })
             } catch (error) {
-                console.log("err" ,error)
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,
+                    
+                  })
             }
         }
+
+        if(visible.type == "edit") {
+            try {
+                const res = await apiClient.put(`http://localhost:8080/api/guest/${visible.data.id}`, values)
+                console.log("res" ,res)
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                  })
+            } catch (error) {
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,                 
+                  })
+            }
+        }
+        onCancel();
     };
     return (
         <div>
@@ -69,28 +103,22 @@ const ModalForm = ({ visible, onCancel = () => { },
 
 const addAccountFormInit = [
     {
-        name: 'Họ tên',
+        name: 'name',
         label: 'Name',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
-        // type: 'number'
     },
     {
-        name: 'Ngày sinh',
+        name: 'birthDate',
         label: 'BirthDate',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
-        name: 'Ngày đến',
-        label: 'Date',
-        rules: [{required : true ,message : "Không được bỏ trống"}],
-    },
-    {
-        name: 'Số chứng minh thư',
+        name: 'identificationNo',
         label: 'CMT',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
     {
-        name: 'ID Sinh viên',
+        name: 'studentID',
         label: 'StudentID',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },

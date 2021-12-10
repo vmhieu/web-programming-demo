@@ -36,7 +36,7 @@ public class GuestServiceImpl implements GuestService {
 		try {
 			GuestEntity guestEntity = modelMapper.map(guest, GuestEntity.class);
 			Optional<StudentEntity> studentEntity = studentRepository.findById(guest.getStudentID());
-			System.out.println(guest.getStudentID());
+//			System.out.println(guest.getStudentID());
 			if (!studentEntity.isPresent()) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 						.body(new ResponseObject("fail", "Sinh viên không tồn tại"));
@@ -58,14 +58,20 @@ public class GuestServiceImpl implements GuestService {
 	public ResponseEntity<?> update(GuestDTO guest) {
 
 		Optional<GuestEntity> guestDb = this.guestRepository.findById(guest.getId());
-		if (guestDb.isPresent()) {
-			GuestEntity guestUpdate = guestDb.get();
-			guestUpdate = modelMapper.map(guest, GuestEntity.class);
-			guestRepository.save(guestUpdate);
-			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Cập nhật thành công", guest));
-		} else {
+		Optional<StudentEntity> studentEntity = studentRepository.findById(guest.getStudentID());
+		if (!guestDb.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
 					.body(new ResponseObject("failed", "Cập nhật thất bại"));
+		} else if(!studentEntity.isPresent()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ResponseObject("fail", "Sinh viên không tồn tại"));
+		} else {
+			
+			GuestEntity guestUpdate = guestDb.get();
+			guestUpdate = modelMapper.map(guest, GuestEntity.class);
+			guestUpdate.setCreatedDate(guestDb.get().getCreatedDate());
+			guestRepository.save(guestUpdate);
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Cập nhật thành công", guest));		
 		}
 	}
 

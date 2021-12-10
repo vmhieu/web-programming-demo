@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.dto.StudentDTO;
@@ -39,6 +40,11 @@ public class StudentController {
 	public List<StudentDTO> findAll(){
 		return  StudentService.getAll();
 
+	}
+	
+	@GetMapping(value = "/api/student/")
+	public ResponseEntity<?> findByName(@RequestParam(name = "name") String name){
+		return StudentService.findByName(name);
 	}
 	
 	@GetMapping(value = "/api/student/{id}")

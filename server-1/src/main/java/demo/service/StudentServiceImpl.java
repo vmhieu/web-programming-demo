@@ -37,29 +37,40 @@ public class StudentServiceImpl implements StudentService {
 	public ResponseEntity<?> create(StudentDTO student) {
 
 		try {
-			StudentEntity studentEntity = modelMapper.map(student, StudentEntity.class);
-			Optional<RoomEntity> roomEntity = roomRepository.findById(student.getRoomID());
-			if (!roomEntity.isPresent()) {
+			boolean hasStudentCode = studentRepository.existsByStudentCode(student.getStudentCode());
+			boolean hasIdentificationNo = studentRepository.existsByIdentificationNo(student.getIdentificationNo());
+			if(hasStudentCode) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-						.body(new ResponseObject("failed", "Phòng không tồn tại"));
-			}
-			List<StudentEntity> listStudentEntities = studentRepository.findAll();
-			RoomEntity roomEntity2 = roomRepository.findById(student.getRoomID()).get();
-			int count = 0;
-			for (StudentEntity item : listStudentEntities) {
-				if (item.getRoom().getId() == student.getRoomID()) {
-					count++;
-				}
-			}
-				if (count >= roomEntity2.getMaximum()) {
+						.body(new ResponseObject("failed", "Mã sinh viên đã tồn tại"));
+			} else if(hasIdentificationNo){
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ResponseObject("failed", "Số chứng minh thư đã tồn tại"));
+			} else{
+				StudentEntity studentEntity = modelMapper.map(student, StudentEntity.class);
+				Optional<RoomEntity> roomEntity = roomRepository.findById(student.getRoomID());
+				if (!roomEntity.isPresent()) {
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-							.body(new ResponseObject("failed", "Số người trong phòng đã tối đa"));
-				} else {
-					studentEntity.setRoom(roomEntity.get());
-					studentEntity = studentRepository.save(studentEntity);
-					return ResponseEntity.status(HttpStatus.OK)
-							.body(new ResponseObject("ok", "Tạo mới sinh viên thành công"));
+							.body(new ResponseObject("failed", "Phòng không tồn tại"));
 				}
+				List<StudentEntity> listStudentEntities = studentRepository.findAll();
+				RoomEntity roomEntity2 = roomRepository.findById(student.getRoomID()).get();
+				int count = 0;
+				for (StudentEntity item : listStudentEntities) {
+					if (item.getRoom().getId() == student.getRoomID()) {
+						count++;
+					}
+				}
+					if (count >= roomEntity2.getMaximum()) {
+						return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+								.body(new ResponseObject("failed", "Số người trong phòng đã tối đa"));
+					} else {
+						studentEntity.setRoom(roomEntity.get());
+						studentEntity = studentRepository.save(studentEntity);
+						return ResponseEntity.status(HttpStatus.OK)
+								.body(new ResponseObject("ok", "Tạo mới sinh viên thành công"));
+					}
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -70,17 +81,25 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public ResponseEntity<?> update(StudentDTO student) {
-
+		boolean hasStudentCode = studentRepository.existsByStudentCode(student.getStudentCode());
+		boolean hasIdentificationNo = studentRepository.existsByIdentificationNo(student.getIdentificationNo());
 		Optional<StudentEntity> studentEntity = this.studentRepository.findById(student.getId());
-		if (studentEntity.isPresent()) {
+		if (!studentEntity.isPresent()) {	
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
+					.body(new ResponseObject("failed", "Cập nhật sinh viên thất bại"));
+		} else if(hasStudentCode) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ResponseObject("failed", "Mã sinh viên đã tồn tại"));
+			} else if(hasIdentificationNo){
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body(new ResponseObject("failed", "Số chứng minh thư đã tồn tại"));
+			} else{
 			StudentEntity studentUpdate = studentEntity.get();
 			studentUpdate = modelMapper.map(student, StudentEntity.class);
 			studentRepository.save(studentUpdate);
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("ok", "Cập nhật sinh viên thành công", student));
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ResponseObject("failed", "Cập nhật sinh viên thất bại"));
+		
 		}
 	}
 
@@ -109,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Thành công", studentDTO));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
-					.body(new ResponseObject("failed", "Không tìm thấy sinh viên", ""));
+					.body(new ResponseObject("failed", "Không tìm thấy sinh viên"));
 		}
 	}
 
@@ -124,5 +143,22 @@ public class StudentServiceImpl implements StudentService {
 					.body(new ResponseObject("failed", "Xoá sinh viên thất bại"));
 		}
 
+	}
+
+	@Override
+	public ResponseEntity<?> findByName(String name) {
+		List<StudentDTO> results = new ArrayList<>();
+		List<StudentEntity> studentEntities = studentRepository.findByName(name);
+		if(!studentEntities.isEmpty()) {
+			for (StudentEntity item : studentEntities) {
+				StudentDTO studentDTO = modelMapper.map(item, StudentDTO.class);
+				results.add(studentDTO);
+			}
+			return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Thành công", results));
+		} else {
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ResponseObject("failed", "Không tìm thấy tên sinh viên"));
+		}
+	
 	}
 }

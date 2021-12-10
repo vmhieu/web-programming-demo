@@ -1,6 +1,6 @@
 package demo.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ public class GuestEntity extends BaseEntity{
 	@CreatedDate
 	private Date createdDate;
 	
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentID;
 	

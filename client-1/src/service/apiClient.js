@@ -26,6 +26,7 @@ const apiClient = {
             data,
         })
             .then((response) => response)
+           // .then((response) => response.message)
             .catch((err) => {
                 throw err;
             });
