@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Tabs, Modal, Button, Form } from 'antd';
+import { Table, Tag, Space, Tabs, Modal, Button, Form, notification } from 'antd';
 import RenderForm from './RenderForm';
+import { TwitterOutlined, CloseOutlined, CheckOutlined} from '@ant-design/icons';
 import {addGuest, addStudent} from '../../../service/account'
 import { apiClient } from '../../../service/apiClient';
 const ModalForm = ({ visible, onCancel = () => { },
@@ -28,12 +29,20 @@ const ModalForm = ({ visible, onCancel = () => { },
             
             try {
                 const res = await addGuest(values)
-                // if(Response.message === "Số người trong phòng đã tối đa"){
-                //     window.alert("Số người trong phòng đã tối đa")
-                // }
-                console.log("res" ,res)
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                  })
             } catch (error) {
-                console.log("err" ,error)
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,
+                    
+                  })
             }
         }
 
@@ -41,8 +50,19 @@ const ModalForm = ({ visible, onCancel = () => { },
             try {
                 const res = await apiClient.put(`http://localhost:8080/api/guest/${visible.data.id}`, values)
                 console.log("res" ,res)
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                  })
             } catch (error) {
-                console.log("err" ,error)
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,                 
+                  })
             }
         }
         onCancel();
@@ -86,18 +106,12 @@ const addAccountFormInit = [
         name: 'name',
         label: 'Name',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
-        // type: 'number'
     },
     {
         name: 'birthDate',
         label: 'BirthDate',
         rules: [{ required: true, message: 'Không được bỏ trống' }],
     },
-    // {
-    //     name: 'Ngày đến',
-    //     label: 'Date',
-    //     rules: [{required : true ,message : "Không được bỏ trống"}],
-    // },
     {
         name: 'identificationNo',
         label: 'CMT',

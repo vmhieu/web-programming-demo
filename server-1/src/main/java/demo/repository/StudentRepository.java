@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import demo.entity.StudentEntity;
 
 public interface StudentRepository extends JpaRepository<StudentEntity, Long>{
-
-	StudentEntity findByName(String name);
+	List<StudentEntity> findByName(String name);
+	//StudentEntity findByName(String name);
 	StudentEntity findByStudentCode(String studentCode);
-
+	boolean existsByStudentCode(String studentCode);
+	boolean existsByIdentificationNo(String identificationNo);
 }

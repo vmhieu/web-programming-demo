@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table, Tag, Space, Tabs, Modal, Button, Form } from "antd";
+import { Table, Tag, Space, Tabs, Modal, Button, Form, notification } from "antd";
+import { TwitterOutlined, CloseOutlined, CheckOutlined} from '@ant-design/icons';
 import RenderForm from "./RenderForm";
 import { addStudent, editStudent } from "../../../service/account";
 import { apiClient } from "../../../service/apiClient";
@@ -25,16 +26,40 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
     if (visible.type == "add") {
       try {
         const res = await addStudent(values);
+        notification.open({
+          message: res.data.message,
+          description:
+          <TwitterOutlined style={{color : '#93b874'}}/> ,
+          icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+        })
         console.log("res", res);
       } catch (error) {
-        console.log("err", error);
+        notification.open({
+          message: error.response.data.message,
+          description:
+          <TwitterOutlined style={{color : '#93b874'}}/> ,
+          icon: <CloseOutlined style={{ color: '#e80404' }} />,
+          
+        })
       }
     }
     if (visible.type == "edit") {
         try {
           const res = await apiClient.put(`http://localhost:8080/api/student/${visible.data.id}`, values);
+          notification.open({
+            message: res.data.message,
+            description:
+            <TwitterOutlined style={{color : '#93b874'}}/> ,
+            icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+          })
           console.log("res", res);
         } catch (error) {
+          notification.open({
+            message: error.response.data.message,
+            description:
+            <TwitterOutlined style={{color : '#93b874'}}/> ,
+            icon: <CloseOutlined style={{ color: '#e80404' }} />,
+          })
           console.log("err", error);
         }
         console.log("===", {
@@ -42,7 +67,7 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
             ...values
         })
       }
-    onCancel();
+     onCancel();
   };
   return (
     <div>

@@ -4,6 +4,7 @@ import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined,TwitterOutli
 import ModalForm from './Form/FormVisiter/ModalForm';
 import { visiterAPI } from '../fake-api/student-API';
 import { getAllGuest } from '../service/account';
+import axios from 'axios';
 
 
 function Visiter(props) {
@@ -39,7 +40,7 @@ function Visiter(props) {
     const _handleRow = (val) => {
         setRow(val);
     }
-    const handleSelect =  (data, type) => {
+    const handleSelect = async (data, type) => {
         if (type == "edit") {
             console.log("duc123")
             setRow(false);
@@ -59,7 +60,13 @@ function Visiter(props) {
             setRow(false)
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
-                openNotification()
+                try {
+                    await axios.delete(`http://localhost:8080/api/guest/${data.id}`)
+                    openNotification()  
+                    _requestData();  
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }
     }
@@ -130,12 +137,17 @@ function Visiter(props) {
 
 const columns = [
     {
+        title : "STT",
+        key : "index",
+        render: (text, record, index) => index + 1
+    },
+    {
         title : "Họ tên" , 
         dataIndex : 'name',
         key : 'name'
     },
     {
-        title : 'CMT',
+        title : 'Số chứng minh thư',
         dataIndex : 'identificationNo',
         key : 'identificationNo'
     },
@@ -145,15 +157,20 @@ const columns = [
         key : 'birthDate'
     },
     {
-        title : 'Date',
+        title : 'Ngày đến',
         dataIndex : 'createdDate',
         key : 'date'
     },
     {
-        title : 'ID Sinh Viên',
-        dataIndex : 'studentID',
-        key : 'studentID'
-    }
+        title : 'Tên Sinh viên',
+        dataIndex : ["studentObject", "name"],
+        key : 'name',
+    },
+    {
+        title : 'Mã sinh viên',
+        dataIndex : ["studentObject", "studentCode"],
+        key : 'studentCode',
+    },
 ]
 
 export default Visiter;
