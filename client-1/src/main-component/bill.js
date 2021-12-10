@@ -8,12 +8,12 @@ const Bill = (props) => {
   const navigate = useNavigate();
   const select = useSelector(state => state.login[0].isLogin);
   
-  // useEffect(() => {
-  //   console.log(select);
-  //   if (!select) {
-  //     navigate('/');
-  //   }
-  // }, []);
+  useEffect(() => {
+    const check = localStorage.getItem("username")
+    if(check == null){
+      navigate("/")
+    }
+  }, []);
   
   const { id } = useParams();
   const data = {

@@ -39,14 +39,16 @@ public class RoomServiceImpl implements RoomService {
 			int count = 0;
 			RoomDTO roomDTO = modelMapper.map(items, RoomDTO.class);
 			for (StudentEntity studentEntity : studentEtt) {
-//				StudentDTO studentDTO = modelMapper.map(studentEtt, StudentDTO.class);
 				if (roomDTO.getId() == studentEntity.getRoom().getId()) {
 					count++;
-//					roomDTO.setListStudent(studentDTO);
 				}
 			}
 			roomDTO.setTotal(count);
 			result.add(roomDTO);
+//			for (RoomDTO item : result) {
+//				RoomEntity roomEtt = modelMapper.map(item , RoomEntity.class);
+//				roomRepository.save(roomEtt);
+//			}
 		}
 		return result;
 	}
