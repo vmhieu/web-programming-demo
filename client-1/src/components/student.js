@@ -77,29 +77,27 @@ const Student = (props) => {
     }
     const { Search } = Input;
     const onSearch = async value => {
-        try {
-            console.log("val", value)
-            const res = await axios.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
+            const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
+            console.log("res" ,res.data.message)
             setData(res.data.data)
-            console.log("res", res.data.data)
-            notification.open({
-                message: res.data.message,
-                description:
-                    <TwitterOutlined style={{ color: '#93b874' }} />,
-                icon: <CheckOutlined style={{ color: '#108ee9' }} />,
-            })
-
-
-        } catch (error) {
-            console.log("err ", error)
-            notification.open({
-                message: error.response.data.message,
-                description:
-                    <TwitterOutlined style={{ color: '#93b874' }} />,
-                icon: <CloseOutlined style={{ color: '#e80404' }} />,
-
-            })
-        }
+            try {
+                
+                notification.open({
+                    message: res.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                  })
+                  
+            } catch (error) {
+                notification.open({
+                    message: error.response.data.message,
+                    description:
+                    <TwitterOutlined style={{color : '#93b874'}}/> ,
+                    icon: <CloseOutlined style={{ color: '#e80404' }} />,
+                    
+                  })
+            }
     };
 
     return (
