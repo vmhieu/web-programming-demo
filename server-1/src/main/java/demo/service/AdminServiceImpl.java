@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService{
 					.body(new ResponseObject("OK", "Đăng nhập thành công"));
 		}
 		else {
-			return ResponseEntity.status(HttpStatus.OK)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(new ResponseObject("Fail", "Không tồn tại user"));
 		}
 	}
