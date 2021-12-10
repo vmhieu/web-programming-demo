@@ -93,12 +93,7 @@ const Student = (props) => {
                     
                   })
             }
-            // if(res.data.message == "Không tìm thấy phòng"){
-            //     openNotification("warning" ,"Không tìm thấy tên phòng")
-            // }
-            // else{
-            //     setData([res.data.data])
-            // }
+            
             
         } catch (error) {
             console.log("err ", error )

@@ -28,3 +28,6 @@ export const updateRooms = (body) => apiClient.put(ENDPOINTS.ROOM , body)
 
 //login
 export const checkLogin = (body) => apiClient.post(ENDPOINTS.LOGIN , body)
+
+//bill
+export const getBillByStudentId = (id) => apiClient.get(`${ENDPOINTS.BILL}?studentId=${id}`, {});
