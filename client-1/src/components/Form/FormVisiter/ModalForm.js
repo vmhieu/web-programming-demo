@@ -48,7 +48,7 @@ const ModalForm = ({ visible, onCancel = () => { },
 
         if(visible.type == "edit") {
             try {
-                const res = await apiClient.put(`http://localhost:8080/api/guest/${visible.data.id}`, values)
+                const res = await apiClient.put(`https://ltweb-demo.azurewebsites.net/api/guest/${visible.data.id}`, values)
                 console.log("res" ,res)
                 notification.open({
                     message: res.data.message,
