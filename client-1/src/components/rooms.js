@@ -233,7 +233,11 @@ const columns = [
     {
         title: 'Giá',
         dataIndex: 'priceUnit',
-        key: 'priceUnit'
+        key: 'priceUnit',
+        render : (text, record) =>{
+            return Number(text).toLocaleString()
+            console.log(text , " === " , record , " === " )
+        }
     }
 ]
 

@@ -154,6 +154,9 @@ const columns = [
         title: 'Đơn giá',
         dataIndex: 'priceUnit',
         key: 'priceUnit',
+        render : (text, record) =>{
+            return Number(text).toLocaleString()
+        }
     },
     {
         title: 'Số cân',
@@ -163,7 +166,10 @@ const columns = [
     {
         title: 'Giá dịch vụ',
         dataIndex: 'price',
-        key: 'price'
+        key: 'price',
+        render : (text, record) =>{
+            return Number(text).toLocaleString()
+        }
     },
     {
         title: 'Tên sinh viên',
