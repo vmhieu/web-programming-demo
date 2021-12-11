@@ -51,22 +51,37 @@ public class ParkingServiceImpl implements ParkingService {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("fail", "Sinh viên không tồn tại"));
             }
             Optional<VehicleEntity> vehicleEntity = Optional.ofNullable(vehicleRepository.findByStudentEntity(studentEntity.get()));
+            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = today.plusDays(1);
+            Date todayWithoutTime = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date tomorrowWithoutTime = Date.from(tomorrow.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            List<ParkingEntity> parkingEntities = parkingRepository.findAllByStartTimeBetweenAndNumberPlate(todayWithoutTime, tomorrowWithoutTime, dto.getNumberPlate());
             if (vehicleEntity.isPresent() && dto.getNumberPlate().equals(vehicleEntity.get().getNumberPlate())) {
-                LocalDate today = LocalDate.now();
-                LocalDate tomorrow = today.plusDays(1);
-                Date todayWithoutTime = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                Date tomorrowWithoutTime = Date.from(tomorrow.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                List<ParkingEntity> parkingEntities = parkingRepository.findAllByStartTimeBetweenAndNumberPlate(todayWithoutTime, tomorrowWithoutTime, dto.getNumberPlate());
                 // Parking entity is not stored so plus one
                 if (parkingEntities.size() + 1 < 3) {
+                    System.out.println(2);
                     parkingEntity.setStudentEntity(studentEntity.get());
                     parkingEntity.setPrice(0);
+                    if (!vehicleEntity.get().isHasTicket()) {
+                        parkingEntity.setPrice(PARKING_FEE);
+                    }
                     parkingRepository.save(parkingEntity);
                 } else {
                     parkingEntity.setStudentEntity(studentEntity.get());
                     parkingEntity.setPrice(PARKING_FEE);
                     parkingRepository.save(parkingEntity);
                 }
+            } else if (vehicleEntity.isPresent() && !dto.getNumberPlate().equals(vehicleEntity.get().getNumberPlate())) {
+                parkingEntity.setStudentEntity(studentEntity.get());
+                parkingEntity.setPrice(PARKING_FEE);
+                if (vehicleEntity.get().isHasTicket()) {
+                    if (parkingEntities.size() + 1 < 3) {
+                        parkingEntity.setPrice(0);
+                    } else {
+                        parkingEntity.setPrice(PARKING_FEE);
+                    }
+                }
+                parkingRepository.save(parkingEntity);
             } else {
                 parkingEntity.setStudentEntity(studentEntity.get());
                 parkingEntity.setPrice(PARKING_FEE);
