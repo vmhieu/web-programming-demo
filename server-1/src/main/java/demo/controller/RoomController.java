@@ -26,7 +26,7 @@ public class RoomController {
 	private RoomService roomService;
 	
 	@GetMapping("/api/room/")
-	public ResponseEntity<ResponseObject> findByName(@RequestParam(name="name") String nameRoom){
+	public ResponseEntity<?> findByName(@RequestParam(name="name") String nameRoom){
 		return roomService.findByName(nameRoom);
 	}
 	
