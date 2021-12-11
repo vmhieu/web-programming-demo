@@ -7,6 +7,6 @@ import demo.entity.RoomEntity;
 
 public interface RoomRepository extends JpaRepository<RoomEntity, Long>{
 	RoomEntity findByStudentRoom(StudentEntity studentEntity);
-	RoomEntity findByName(String name);
+	RoomEntity findByNameStartingWith(String name);
 	boolean existsByName(String nameRoom);
 }

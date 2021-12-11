@@ -119,7 +119,7 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public ResponseEntity<ResponseObject> findByName(String name) {
-			RoomEntity roomEtt = roomRepository.findByName(name);
+			RoomEntity roomEtt = roomRepository.findByNameStartingWith(name);
 			if(roomEtt == null) {
 				return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("failed", "Không tìm thấy phòng"));
 			}
