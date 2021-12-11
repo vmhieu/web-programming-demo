@@ -65,7 +65,7 @@ const Bill = (props) => {
           let name = "";
           const price = item.object.price;
           if (item.type === "ParkingEntity") {
-            name = "Gửi xe-" + item.object.serviceCode + (price ? "" : " (FREE)");
+            name = "Gửi xe" + (price ? "" : " (FREE)");
           } else if (item.type === "FoodEntity") {
             name = `Đồ ăn-${item.object.serviceCode} (x${item.object.times})`;
           } else if (item.type === "LaundryEntity") {
@@ -130,7 +130,8 @@ const Bill = (props) => {
                                 {item.name}
                               </div>
                               <div key={index} className="column has-text-right">
-                                {item.price}
+                                { Number(item.price).toLocaleString()}
+             
                               </div>
                             </div>
                           );
@@ -166,7 +167,7 @@ const Bill = (props) => {
                   <span className="title is-6">Tổng cộng</span>
                 </div>
                 <div className="column has-text-right">
-                  <span className="title is-6">{values.totalPrice}</span>
+                  <span className="title is-6">{Number(values.totalPrice).toLocaleString()}</span>
                 </div>
               </div>
             </div>

@@ -14,7 +14,7 @@ const Food = () => {
   const _requestData = async (param = {}) => {
     try {
       const { data } = await apiClient.get("https://ltweb-demo.azurewebsites.net/api/service/food")
-      // console.log("daraaaa" ,data)
+      console.log("daraaaa" ,data)
       setData(data)
     } catch (error) {
 
@@ -60,7 +60,7 @@ const Food = () => {
   }
   useEffect(() => {
     _requestData()
-  },[])
+  }, [])
 
   return (
     <div>
@@ -148,17 +148,32 @@ const columns = [
     title: 'Đơn giá',
     dataIndex: 'priceUnit',
     key: 'priceUnit',
+    render : (text, record) =>{
+      return Number(text).toLocaleString()
+  }
   },
   {
     title: 'Giá',
     dataIndex: 'price',
     key: 'price',
+    render : (text, record) =>{
+      return Number(text).toLocaleString()
+  }
   },
   {
     title: 'Số lượng',
     dataIndex: 'times',
     key: 'times',
-  }
+  }, {
+    title: 'Tên sinh viên',
+    dataIndex: ["studentObject", "name"],
+    key: 'name',
+  },
+  {
+    title: 'Mã sinh viên',
+    dataIndex: ["studentObject", "studentCode"],
+    key: 'studentCode',
+  },
 
 ];
 

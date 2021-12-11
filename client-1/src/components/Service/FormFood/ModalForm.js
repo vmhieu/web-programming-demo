@@ -37,7 +37,7 @@ const ModalForm = ({ visible, onCancel = () => { },
         console.log('Success:', values);
         if (visible.type == "add") {
             try {
-                const res = await apiClient.post("https://ltweb-demo.azurewebsites.net/api/service/food" , {...values ,studentId : 1})
+                const res = await apiClient.post("https://ltweb-demo.azurewebsites.net/api/service/food" , {...values})
                 console.log("res", res)
                 openNotification("success" , "Thêm mới thành công")
             } catch (error) {

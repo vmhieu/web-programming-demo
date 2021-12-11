@@ -20,7 +20,10 @@ function Parking(props) {
         {
             title : "Thành tiền",
             dataIndex : "price",
-            key : "price"
+            key : "price",
+            render : (text, record) =>{
+                return Number(text).toLocaleString()
+            }
         },
         {
             title : "Tên" , 
