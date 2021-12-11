@@ -82,12 +82,6 @@ const Student = (props) => {
             try {    
                 const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
             console.log("res" ,res.data.message)
-                // notification.open({
-                //     message: res.data.message,
-                //     description:
-                //     <TwitterOutlined style={{color : '#93b874'}}/> ,
-                //     icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
-                //   })
                   setData(res.data.data)
             } catch (error) {
                 console.log(error)
