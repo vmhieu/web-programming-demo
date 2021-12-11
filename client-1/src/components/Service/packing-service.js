@@ -13,6 +13,16 @@ function Parking(props) {
             render: (text, record, index) => index + 1
         },
         {
+            title : "Biển số xe",
+            dataIndex : "numberPlate",
+            key : "numberPlate"
+        },
+        {
+            title : "Thành tiền",
+            dataIndex : "price",
+            key : "price"
+        },
+        {
             title : "Tên" , 
             dataIndex : ["studentObject", "name"],
             key : "name",
@@ -23,16 +33,6 @@ function Parking(props) {
             dataIndex : ["studentObject", "studentCode"],
             key : "studentCode",
             render: text => text
-        },
-        {
-            title : "Biển số xe",
-            dataIndex : "numberPlate",
-            key : "numberPlate"
-        },
-        {
-            title : "Thành tiền",
-            dataIndex : "price",
-            key : "price"
         },
         {
             title : "Giờ vào",
