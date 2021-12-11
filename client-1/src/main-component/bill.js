@@ -67,9 +67,9 @@ const Bill = (props) => {
           if (item.type === "ParkingEntity") {
             name = "Gửi xe" + (price ? "" : " (FREE)");
           } else if (item.type === "FoodEntity") {
-            name = `Đồ ăn-${item.object.serviceCode} (x${item.object.times})`;
+            name = `${item.object.name}-${item.object.serviceCode} (x${item.object.times})`;
           } else if (item.type === "LaundryEntity") {
-            name = `Giặt là-${item.object.serviceCode} (${item.object.weight}kg)`
+            name = `${item.object.name}-${item.object.serviceCode} (${item.object.weight}kg)`
           }
           result[day].push({
             name,

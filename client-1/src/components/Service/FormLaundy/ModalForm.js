@@ -45,7 +45,7 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
     }
     if (visible.type == "edit") {
         try {
-          const res = await apiClient.put(`https://ltweb-demo.azurewebsites.net/api/service/laundry${visible.data.id}`, values);
+          const res = await apiClient.put(`https://ltweb-demo.azurewebsites.net/api/service/laundry/${visible.data.id}`, values);
           notification.open({
             message: res.data.message,
             description:
@@ -55,7 +55,7 @@ const ModalForm = ({ visible, onCancel = () => {} }) => {
           console.log("res", res);
         } catch (error) {
           notification.open({
-            message: error.response.data.message,
+            message: "Sửa thất bại",
             description:
             <TwitterOutlined style={{color : '#93b874'}}/> ,
             icon: <CloseOutlined style={{ color: '#e80404' }} />,

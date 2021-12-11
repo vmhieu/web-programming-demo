@@ -89,12 +89,12 @@ function Rooms(props) {
     const onSearch = async value => {
         try {
             const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/room/?name=${value}`)
-            console.log("res" ,res.data.message)
+            console.log("res" ,res.data)
             if(res.data.message == "Không tìm thấy phòng"){
                 openNotification("warning" ,"Không tìm thấy tên phòng")
             }
             else{
-                setData([res.data.data])
+                setData([...res.data.data])
             }
             
         } catch (error) {
