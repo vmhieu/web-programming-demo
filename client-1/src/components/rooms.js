@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Tabs, Modal, Button, Alert, notification,Input } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CheckOutlined, LeftCircleOutlined, ZoomInOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CheckOutlined, LeftCircleOutlined, CloseOutlined,ZoomInOutlined } from '@ant-design/icons';
 import ModalForm from './Form/FormRooms/ModalForm';
 import { roomAPI, serviceAPI, visiterAPI } from '../fake-api/student-API';
 import { getAllRooms } from '../service/account';
@@ -38,7 +38,7 @@ function Rooms(props) {
             message: msg,
             description:
                 <TwitterOutlined style={{ color: '#93b874' }} />,
-            icon: <CheckOutlined style={{ color: '#108ee9' }} />,
+            icon: type == "success" ? <CheckOutlined style={{ color: '#108ee9' }} /> : <CloseOutlined style={{ color: 'red' }} />,
         });
     };
     const _handleRow = (val) => {
