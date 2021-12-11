@@ -113,6 +113,7 @@ function Vehicle(props) {
                 onCancel={() => {
                     console.log("asdada")
                     setModalForm(false)
+                    _requestData()
                 }}
                 jsonInit={jsonInit}
             />
