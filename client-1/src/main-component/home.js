@@ -46,13 +46,13 @@ const Home = () => {
                     <TabPane tab="Quản lý dịch vụ" key="4">
                         <Service />
                         <Tabs defaultActiveKey="1" centered>
-                            <TabPane tab="Food" key="1">
+                            <TabPane tab="Đồ ăn" key="1">
                                 <Food />
                             </TabPane>
-                            <TabPane tab="Packing" key="2">
+                            <TabPane tab="Gửi xe" key="2">
                                 <Packing />
                             </TabPane>
-                            <TabPane tab="Laundry" key="3">
+                            <TabPane tab="Giặt là" key="3">
                                 <Laundry />
                             </TabPane>
                         </Tabs>

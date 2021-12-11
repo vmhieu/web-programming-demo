@@ -20,6 +20,12 @@ export const addVehicle = (body) => apiClient.post(ENDPOINTS.VEHICLE, body);
 export const updateVehicle = (id, body) => apiClient.put(`${ENDPOINTS.VEHICLE}/${id}`, body);
 export const deleteVehilce = (id) => apiClient.delete(`${ENDPOINTS.VEHICLE}/${id}`, {});
 
+//service/parking
+export const getAllParkings = (param) => apiClient.get(ENDPOINTS.PARKING, param);
+export const addParking = (body) => apiClient.post(ENDPOINTS.PARKING, body);
+export const updateParking = (id, body) => apiClient.put(`${ENDPOINTS.PARKING}/${id}`, body);
+export const deleteParking = (id) => apiClient.delete(`${ENDPOINTS.PARKING}/${id}`, {});
+
 //rooms
 
 export const getAllRooms = (param) => apiClient.get(ENDPOINTS.ROOM ,param)
@@ -31,3 +37,9 @@ export const checkLogin = (body) => apiClient.post(ENDPOINTS.LOGIN , body)
 
 //bill
 export const getBillByStudentId = (id) => apiClient.get(`${ENDPOINTS.BILL}?studentId=${id}`, {});
+
+
+//laundry
+export const getAllLaundry = (param) => apiClient.get(ENDPOINTS.LAUNDRY ,param)
+export const addLaundry = (body) => apiClient.post(ENDPOINTS.LAUNDRY , body)
+export const updateLaundry = (body) => apiClient.put(ENDPOINTS.LAUNDRY , body)

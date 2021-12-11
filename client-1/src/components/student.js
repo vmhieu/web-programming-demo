@@ -77,19 +77,20 @@ const Student = (props) => {
     }
     const { Search } = Input;
     const onSearch = async value => {
-            const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
+            
+            
+            try {    
+                const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
             console.log("res" ,res.data.message)
-            setData(res.data.data)
-            try {
-                
-                notification.open({
-                    message: res.data.message,
-                    description:
-                    <TwitterOutlined style={{color : '#93b874'}}/> ,
-                    icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
-                  })
-                  
+                // notification.open({
+                //     message: res.data.message,
+                //     description:
+                //     <TwitterOutlined style={{color : '#93b874'}}/> ,
+                //     icon: <CheckOutlined style={{ color: '#108ee9' }} />,    
+                //   })
+                  setData(res.data.data)
             } catch (error) {
+                console.log(error)
                 notification.open({
                     message: error.response.data.message,
                     description:
@@ -224,7 +225,7 @@ const columns = [
     },
     {
         title: 'Tên phòng',
-        dataIndex: ["roomObject1", "name"],
+        dataIndex: ['roomObject1', 'name'],
         key: 'name',
     },
 
