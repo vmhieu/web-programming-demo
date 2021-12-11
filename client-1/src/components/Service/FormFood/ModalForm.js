@@ -123,7 +123,12 @@ const addAccountFormInit = [
         name: 'times',
         label: 'Số lượng',
         rules: [{ required: true, message: "Không được bỏ trống" }],
-    }
+    },
+    {
+        name: "studentId",
+        label: "ID Sinh viên",
+        rules: [{ required: true, message: "Không được bỏ trống" }],
+    },
 ];
 
 export default ModalForm;
