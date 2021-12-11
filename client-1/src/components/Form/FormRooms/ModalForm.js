@@ -38,6 +38,7 @@ const ModalForm = ({ visible, onCancel = () => { },
             try {
                 const res = await addRooms(values)
                 console.log("res", res)
+                openNotification("success" , "Thêm phòng mới thành công")
             } catch (error) {
                 console.log("err", error)
                 openNotification("warning" , "Tên phòng đã tồn tại")
@@ -59,8 +60,10 @@ const ModalForm = ({ visible, onCancel = () => { },
                     priceUnit : values.priceUnit || "",
                     maximum : values.maximum || ""
                 })
+                openNotification("success" , "Chỉnh sửa thành công")
             } catch (error) {
                 console.log("err" ,error)
+                openNotification("error" , error)
             }
         }
         onCancel()

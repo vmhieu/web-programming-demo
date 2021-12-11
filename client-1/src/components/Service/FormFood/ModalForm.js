@@ -37,11 +37,12 @@ const ModalForm = ({ visible, onCancel = () => { },
         console.log('Success:', values);
         if (visible.type == "add") {
             try {
-                const res = await apiClient.post("https://ltweb-demo.azurewebsites.net/api/service/food" , values)
+                const res = await apiClient.post("https://ltweb-demo.azurewebsites.net/api/service/food" , {...values ,studentId : 1})
                 console.log("res", res)
+                openNotification("success" , "Thêm mới thành công")
             } catch (error) {
                 console.log("err", error)
-                openNotification("warning" , "Tên phòng đã tồn tại")
+                openNotification("warning" , "Tên phòng sản phẩm đã tồn tại")
             }
         }
         if (visible.type == "edit") {
@@ -63,8 +64,10 @@ const ModalForm = ({ visible, onCancel = () => { },
                     times : values.times || "",
                     studentId : visible.data.studentId|| ""
                 })
+                openNotification("success" , "Chỉnh sửa thành công")
             } catch (error) {
                 console.log("err" ,error)
+                
             }
         }
         onCancel()

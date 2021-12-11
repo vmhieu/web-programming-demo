@@ -55,6 +55,7 @@ const Food = () => {
         openNotification()
       }
       setRow(false)
+      _requestData()
     }
   }
   useEffect(() => {
