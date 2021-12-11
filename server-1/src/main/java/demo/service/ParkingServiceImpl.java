@@ -59,7 +59,6 @@ public class ParkingServiceImpl implements ParkingService {
             if (vehicleEntity.isPresent() && dto.getNumberPlate().equals(vehicleEntity.get().getNumberPlate())) {
                 // Parking entity is not stored so plus one
                 if (parkingEntities.size() + 1 < 3) {
-                    System.out.println(2);
                     parkingEntity.setStudentEntity(studentEntity.get());
                     parkingEntity.setPrice(0);
                     if (!vehicleEntity.get().isHasTicket()) {
@@ -73,13 +72,10 @@ public class ParkingServiceImpl implements ParkingService {
                 }
             } else if (vehicleEntity.isPresent() && !dto.getNumberPlate().equals(vehicleEntity.get().getNumberPlate())) {
                 parkingEntity.setStudentEntity(studentEntity.get());
-                parkingEntity.setPrice(PARKING_FEE);
-                if (vehicleEntity.get().isHasTicket()) {
-                    if (parkingEntities.size() + 1 < 3) {
-                        parkingEntity.setPrice(0);
-                    } else {
-                        parkingEntity.setPrice(PARKING_FEE);
-                    }
+                if (parkingEntities.size() + 1 < 3) {
+                    parkingEntity.setPrice(0);
+                } else {
+                    parkingEntity.setPrice(PARKING_FEE);
                 }
                 parkingRepository.save(parkingEntity);
             } else {
