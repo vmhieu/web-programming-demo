@@ -7,5 +7,6 @@ export const ENDPOINTS = {
         GUEST : '/api/guest',
         LOGIN : '/api/admin',
         VEHICLE: '/api/vehicle',
-        BILL: 'api/bill'
+        BILL: 'api/bill',
+        PARKING: 'api/service/parking',
 };

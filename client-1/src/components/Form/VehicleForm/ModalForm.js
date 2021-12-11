@@ -21,7 +21,6 @@ const ModalForm = ({ visible, onCancel = () => { }, jsonInit
 
 
     const onFinish = async(values) => {
-        onCancel()
         if(visible.type == "add") {
             try {
                 const res = await visible.action(values);
@@ -58,6 +57,7 @@ const ModalForm = ({ visible, onCancel = () => { }, jsonInit
                 });
             }
         }
+        onCancel();
     };
     return (
         <div>
