@@ -148,7 +148,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public ResponseEntity<?> findByName(String name) {
 		List<StudentDTO> results = new ArrayList<>();
-		List<StudentEntity> studentEntities = studentRepository.findByName(name);
+		List<StudentEntity> studentEntities = studentRepository.findByNameIgnoreCaseContaining(name);
 		if(!studentEntities.isEmpty()) {
 			for (StudentEntity item : studentEntities) {
 				RoomEntity roomEntity = item.getRoom();
