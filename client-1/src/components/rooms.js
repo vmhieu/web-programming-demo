@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Tag, Space, Tabs, Modal, Button, Alert, notification,Input } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CheckOutlined, FastBackwardOutlined, ZoomInOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TwitterOutlined, CheckOutlined, LeftCircleOutlined, ZoomInOutlined } from '@ant-design/icons';
 import ModalForm from './Form/FormRooms/ModalForm';
 import { roomAPI, serviceAPI, visiterAPI } from '../fake-api/student-API';
 import { getAllRooms } from '../service/account';
@@ -117,9 +117,9 @@ function Rooms(props) {
                     <div style={{marginRight : '50px'}}>
                         <Space>
                             <Search
-                                placeholder="input search text"
+                                placeholder="Tìm kiếm..."
                                 allowClear
-                                enterButton="Search"
+                                enterButton="Tìm kiếm"
                                 size="large"
                                 onSearch={onSearch}
                             />
@@ -188,7 +188,7 @@ function Rooms(props) {
             {!showStudent &&
                 <div>
                     <div>
-                        <FastBackwardOutlined onClick={() => {
+                        <LeftCircleOutlined onClick={() => {
                             setShowStudent(!showStudent)
                             setRow(false)
                             setOption("");
@@ -206,9 +206,9 @@ function Rooms(props) {
 
 const columns = [
     {
-        title: 'id',
-        dataIndex: 'id',
-        key: 'id'
+        title: "STT",
+        key: "index",
+        render: (text, record, index) => index + 1
     },
     {
         title: "Tên phòng",

@@ -13,7 +13,7 @@ public class VehicleEntity extends BaseEntity {
 	@Column(name = "has_ticket")
 	private boolean hasTicket;
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentEntity;
 

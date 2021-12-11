@@ -9,4 +9,5 @@ export const ENDPOINTS = {
         VEHICLE: '/api/vehicle',
         BILL: 'api/bill',
         PARKING: 'api/service/parking',
+        LAUNDRY: '/api/service/laundry'
 };

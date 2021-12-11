@@ -37,3 +37,9 @@ export const checkLogin = (body) => apiClient.post(ENDPOINTS.LOGIN , body)
 
 //bill
 export const getBillByStudentId = (id) => apiClient.get(`${ENDPOINTS.BILL}?studentId=${id}`, {});
+
+
+//laundry
+export const getAllLaundry = (param) => apiClient.get(ENDPOINTS.LAUNDRY ,param)
+export const addLaundry = (body) => apiClient.post(ENDPOINTS.LAUNDRY , body)
+export const updateLaundry = (body) => apiClient.put(ENDPOINTS.LAUNDRY , body)

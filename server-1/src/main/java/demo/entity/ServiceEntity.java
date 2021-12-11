@@ -26,7 +26,7 @@ public class ServiceEntity extends BaseEntity{
 	@CreatedDate
 	private Date createdDate;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private StudentEntity studentEntity;
 
