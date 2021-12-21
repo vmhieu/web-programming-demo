@@ -56,4 +56,9 @@ public class RoomController {
 		return roomService.deleteById(id);
 	}
 	
+	@GetMapping("/api/room/bill")
+	public ResponseEntity<?> getRoomBill(){
+		return roomService.getBillRoom();
+	}
+	
 }

@@ -44,6 +44,8 @@ public class RoomServiceImpl implements RoomService {
 				}
 			}
 			roomDTO.setTotal(count);
+			items.setTotal(count);
+			roomRepository.save(items);
 			result.add(roomDTO);
 //			for (RoomDTO item : result) {
 //				RoomEntity roomEtt = modelMapper.map(item , RoomEntity.class);
@@ -135,6 +137,18 @@ public class RoomServiceImpl implements RoomService {
 					.body(new ResponseObject("failed", "Không tìm thấy phòng"));
 		}
 	
+	}
+
+	@Override
+	public ResponseEntity<?> getBillRoom() {
+		List<RoomEntity> roomEntity = roomRepository.findAll();
+		int count=0;
+		for (RoomEntity items : roomEntity) {
+			System.out.println("total " + items.getTotal());
+			count += items.getTotal()*items.getPriceUnit();
+		}
+		System.out.println("count " + count);
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Thành công", count));
 	}
 
 }

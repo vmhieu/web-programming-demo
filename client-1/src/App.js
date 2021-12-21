@@ -4,6 +4,7 @@ import Login from "./main-component/login";
 import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import Bill from "./main-component/bill";
+import Statistical from "./components/Service/statistical";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path='/' element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/bill/:id" element={<Bill />} />
+          <Route path="/statistical" element={<Statistical />} />
         </Routes>
       </Router>
     </div>

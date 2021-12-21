@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from '@ant-design/icons';
 import { login } from '../store/reducer';
 import Vehicle from "../components/vehicle";
+import Statistical from '../components/Service/statistical';
 
 const Home = () => {
     const { TabPane } = Tabs;
@@ -20,6 +21,7 @@ const Home = () => {
     const dispatch = useDispatch();
     const select = useSelector(state => state.login[0].isLogin)
     console.log("selllllllll", select)
+    const navigation = useNavigate()
     useEffect(() => {
         if (!select) {
             navigate('/')
@@ -45,7 +47,10 @@ const Home = () => {
                     </TabPane>
                     <TabPane tab="Quản lý dịch vụ" key="4">
                         <Service />
-                        <Tabs defaultActiveKey="1" centered>
+                        <div style={{display : 'flex' , justifyContent : 'flex-end' , marginRight : '30px'}}>
+                        <Button onClick={() => navigate("/statistical")}>Xem thống kê</Button>
+                        </div>
+                        <Tabs defaultActiveKey="1" centered >
                             <TabPane tab="Đồ ăn" key="1">
                                 <Food />
                             </TabPane>
@@ -55,11 +60,15 @@ const Home = () => {
                             <TabPane tab="Giặt là" key="3">
                                 <Laundry />
                             </TabPane>
+                            {/* <TabPane tab="Xem thống kê" key="4">
+                                <Statistical/>
+                            </TabPane> */}
                         </Tabs>
+                        
                     </TabPane>
                     <TabPane tab="Quản lý xe" key="5">
                         <Vehicle />
-                    </TabPane>
+                    </TabPane>                  
                 </Tabs>
             </div>
 

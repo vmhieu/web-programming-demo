@@ -65,7 +65,7 @@ function Rooms(props) {
             const r = window.confirm("Bạn có muốn xóa item này không")
             if (r == true) {
                 try {
-                    await axios.delete(`https://ltweb-demo.azurewebsites.net/api/room/${data.id}`)
+                    await axios.delete(`http://localhost:8080/api/room/${data.id}`)
                     openNotification('success' , "Xóa thành công")
                     _requestData();
                 } catch (error) {
@@ -76,7 +76,7 @@ function Rooms(props) {
         if (type == 'show') {
             console.log("rowww", row)
             const _requestDataStudent = async () => {
-                const { data } = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/room/${row.id}`)
+                const { data } = await apiClient.get(`http://localhost:8080/api/room/${row.id}`)
                 console.log("dataStudent", data.data.listStudent)
                 setDataStudent(data.data.listStudent)
                 setShowStudent(false)
@@ -88,7 +88,7 @@ function Rooms(props) {
     const { Search } = Input;
     const onSearch = async value => {
         try {
-            const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/room/?name=${value}`)
+            const res = await apiClient.get(`http://localhost:8080/api/room/?name=${value}`)
             console.log("res" ,res.data)
             if(res.data.message == "Không tìm thấy phòng"){
                 openNotification("warning" ,"Không tìm thấy tên phòng")

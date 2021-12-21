@@ -51,7 +51,7 @@ const Food = () => {
     if (type == "del") {
       const r = window.confirm("Bạn có muốn xóa item này không")
       if (r == true) {
-        await apiClient.delete(`https://ltweb-demo.azurewebsites.net/api/service/food/${data.id}`)
+        await apiClient.delete(`http://localhost:8080/api/service/food/${data.id}`)
         openNotification()
       }
       setRow(false)
