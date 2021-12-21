@@ -100,4 +100,22 @@ public class FoodServiceImpl implements FoodService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
         }
 	}
+
+	@Override
+	public ResponseEntity<?> getBill() {
+		try {
+			List<FoodEntity> foodEntities = foodRepository.findAll();
+			long temp = 0;
+			for (FoodEntity foodEntity : foodEntities) {
+				temp += foodEntity.getPrice();
+			}
+			
+			return ResponseEntity.ok(new ResponseObject("ok", "thành công", temp));
+		} catch (Exception e) {
+			System.out.println(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
+		}
+		
+		
+	}
 }

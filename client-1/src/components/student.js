@@ -15,7 +15,6 @@ const Student = (props) => {
     const [modalForm, setModalForm] = useState(false)
     const _requestData = async () => {
         const data = await getAllStudent()
-        // console.log("data2134", data)
         const dataConvert = data.data.map(i => {
             return i
         })
@@ -61,7 +60,7 @@ const Student = (props) => {
             const r = window.confirm("Bạn có muốn xóa item này không")
             if (r == true) {
                 try {
-                    await axios.delete(`https://ltweb-demo.azurewebsites.net/api/student/${data.id}`)
+                    await axios.delete(`http://localhost:8080/api/student/${data.id}`)
                     openNotification()
                     _requestData();
                 } catch (error) {
@@ -77,10 +76,9 @@ const Student = (props) => {
     }
     const { Search } = Input;
     const onSearch = async value => {
-            
-            
+
             try {    
-                const res = await apiClient.get(`https://ltweb-demo.azurewebsites.net/api/student/?name=${value}`)
+                const res = await apiClient.get(`http://localhost:8080/api/student/?name=${value}`)
             console.log("res" ,res.data.message)
                   setData(res.data.data)
             } catch (error) {

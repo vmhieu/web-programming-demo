@@ -2,6 +2,7 @@ package demo.service;
 
 import demo.dto.LaundryDTO;
 import demo.dto.StudentDTO;
+import demo.entity.FoodEntity;
 import demo.entity.LaundryEntity;
 import demo.entity.ResponseObject;
 import demo.entity.StudentEntity;
@@ -101,4 +102,23 @@ public class LaundryServiceImpl implements LaundryService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
         }
 	}
+
+	@Override
+	public ResponseEntity<?> getBill() {
+		try {
+			List<LaundryEntity> laundryEntities = laundryRepository.findAll();
+			long temp = 0;
+			for (LaundryEntity laundryEntity : laundryEntities) {
+				temp += laundryEntity.getPrice();
+			}
+			System.out.println("aaa");
+			return ResponseEntity.ok(new ResponseObject("ok", "thành công", temp));
+		} catch (Exception e) {
+			System.out.println(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
+		}
+		
+		
+	}
+	
 }

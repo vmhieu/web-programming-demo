@@ -10,5 +10,6 @@ public interface ParkingService {
     ResponseEntity<?> create(ParkingDTO dto);
     ResponseEntity<?> update(ParkingDTO dto);
     ResponseEntity<?> getAll();
+    ResponseEntity<?> getBill();
     ResponseEntity<?> delete(long id);
 }

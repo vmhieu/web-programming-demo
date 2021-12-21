@@ -61,7 +61,7 @@ function Visiter(props) {
             const r = window.confirm("Bạn có muốn xóa item này không")
             if(r == true) {
                 try {
-                    await axios.delete(`https://ltweb-demo.azurewebsites.net/api/guest/${data.id}`)
+                    await axios.delete(`http://localhost:8080/api/guest/${data.id}`)
                     openNotification()  
                     _requestData();  
                 } catch (error) {

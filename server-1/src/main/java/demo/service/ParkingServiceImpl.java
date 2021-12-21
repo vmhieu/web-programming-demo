@@ -29,6 +29,7 @@ import java.util.Optional;
 public class ParkingServiceImpl implements ParkingService {
 
     private final float PARKING_FEE = 3000;
+    private final float PARKING_TICKET = 100000;
 
     @Autowired
     private ParkingRepository parkingRepository;
@@ -154,4 +155,26 @@ public class ParkingServiceImpl implements ParkingService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
         }
     }
+
+	@Override
+	public ResponseEntity<?> getBill() {
+		try {
+			List<VehicleEntity> vehicleEntities = vehicleRepository.findAll();
+			List<ParkingEntity> parkingEntities = parkingRepository.findAll();
+			long temp = 0;
+			for (VehicleEntity vehicleEntity: vehicleEntities) {
+				if(vehicleEntity.isHasTicket() == true) {
+					temp += PARKING_TICKET;
+				}
+			}
+			for (ParkingEntity parkingEntity : parkingEntities) {
+				temp += parkingEntity.getPrice();
+			}
+			return ResponseEntity.ok(new ResponseObject("ok", "thành công", temp));
+		} catch (Exception e) {
+			System.out.println(e.toString());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseObject("fail", "Internal Server Error!!! " + e.toString()));
+		}
+		
+	}
 }

@@ -81,19 +81,10 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public ResponseEntity<?> update(StudentDTO student) {
-//		boolean hasStudentCode = studentRepository.existsByStudentCode(student.getStudentCode());
-//		boolean hasIdentificationNo = studentRepository.existsByIdentificationNo(student.getIdentificationNo());
 		Optional<StudentEntity> studentEntity = this.studentRepository.findById(student.getId());
-	//	StudentEntity studentEntity2 = studentRepository.findById(student.getId()).get();
 		if (!studentEntity.isPresent()) {	
 			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED)
 					.body(new ResponseObject("failed", "Không tìm thấy sinh viên"));
-//		} else if(hasStudentCode && student.getId() != studentEntity2.getId()) {
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//						.body(new ResponseObject("failed", "Mã sinh viên đã tồn tại"));
-//			} else if(hasIdentificationNo && student.getId() != studentEntity2.getId()){
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//						.body(new ResponseObject("failed", "Số chứng minh thư đã tồn tại"));
 			} else{
 			StudentEntity studentUpdate = studentEntity.get();
 			studentUpdate = modelMapper.map(student, StudentEntity.class);

@@ -30,6 +30,11 @@ public class ServiceController {
     public ResponseEntity<?> getAllParking() {
         return parkingService.getAll();
     }
+    
+    @GetMapping("/bill/parking")
+    public ResponseEntity<?> getBillParking() {
+        return parkingService.getBill();
+    }
 
     @PostMapping("/parking")
     public ResponseEntity<?> createParking(@RequestBody ParkingDTO dto) {
@@ -63,6 +68,11 @@ public class ServiceController {
         return foodService.getAll();
     }
     
+    @GetMapping("/bill/food")
+    public ResponseEntity<?> getBillFood() {
+        return foodService.getBill();
+    }
+    
     @DeleteMapping("/food/{id}")
     public ResponseEntity<?> deleteFood(@PathVariable long id) {
         return foodService.delete(id);
@@ -82,6 +92,11 @@ public class ServiceController {
     @GetMapping("/laundry")
     public ResponseEntity<?> getAllLaundry() {
         return laundryService.getAll();
+    }
+    
+    @GetMapping("/bill/laundry")
+    public ResponseEntity<?> getBillLaundry() {
+        return laundryService.getBill();
     }
     
     @DeleteMapping("/laundry/{id}")

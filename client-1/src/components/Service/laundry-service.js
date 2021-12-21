@@ -59,7 +59,7 @@ const Laundry = (props) => {
             const r = window.confirm("Bạn có muốn xóa item này không")
             if (r == true) {
                 try {
-                    await axios.delete(`https://ltweb-demo.azurewebsites.net/api/service/laundry/${data.id}`)
+                    await axios.delete(`http://localhost:8080/api/service/laundry/${data.id}`)
                     openNotification()
                     _requestData();
                 } catch (error) {

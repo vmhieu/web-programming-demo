@@ -7,5 +7,6 @@ public interface LaundryService {
     ResponseEntity<?> create(LaundryDTO dto);
     ResponseEntity<?> update(LaundryDTO dto);
     ResponseEntity<?> getAll();
+    ResponseEntity<?> getBill();
     ResponseEntity<?> delete(long id);
 }

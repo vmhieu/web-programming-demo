@@ -13,7 +13,7 @@ const Food = () => {
 
   const _requestData = async (param = {}) => {
     try {
-      const { data } = await apiClient.get("https://ltweb-demo.azurewebsites.net/api/service/food")
+      const { data } = await apiClient.get("http://localhost:8080/api/service/food")
       console.log("daraaaa" ,data)
       setData(data)
     } catch (error) {
